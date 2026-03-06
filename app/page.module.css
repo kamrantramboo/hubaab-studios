@@ -49,10 +49,10 @@
   background: #000;
   min-height: 100vh;
   padding-top: var(--nav-height); /* Clear global nav */
-  padding-bottom: 48px;
+  padding-bottom: 0px; /* Removed bottom padding for seamless feel */
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 0px;  /* Removed gap for seamless mobile feed */
   position: relative;
 }
 
@@ -60,11 +60,18 @@
   display: none; /* hidden on mobile */
 }
 
+/* On mobile side, these span 100% width stacked */
+.listWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0;
+}
+
 .projectBlock {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 16px;
   position: relative;
 }
 
@@ -73,6 +80,7 @@
   position: relative;
   aspect-ratio: 16 / 9;
   background: #111;
+  /* Removed rounded corners or margins for a seamless edge-to-edge look */
 }
 
 .videoField {
@@ -111,12 +119,18 @@
 }
 
 .projectInfo {
-  padding: 0 var(--container-padding);
+  padding: 16px var(--container-padding) 32px var(--container-padding);
   display: flex;
   flex-direction: column;
   gap: 4px;
   color: #fff;
   text-decoration: none;
+  background: #000; /* Ensure solid background between seamless videos */
+  position: relative;
+}
+
+.progressBar {
+  display: none; /* Hide progress bar on mobile reactive feed */
 }
 
 .client {
@@ -131,13 +145,7 @@
   font-weight: 500;
 }
 
-.category {
-  font-size: 0.85rem;
-  opacity: 0.5;
-}
-
 .infoCenter { display: block; }
-.infoRight { display: block; }
 
 /* Desktop Interactive List Layout */
 @media (min-width: 768px) {
@@ -176,6 +184,28 @@
     display: none;
   }
 
+  /* Wrap list items and constrain to 1/4th screen on bottom left */
+  .listWrapper {
+    position: absolute;
+    bottom: var(--container-padding); /* Optional breathing room */
+    left: var(--container-padding);
+    width: 25vw;
+    max-width: 400px;
+    min-width: 280px;
+    max-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    z-index: 10;
+    /* Hide scrollbar */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .listWrapper::-webkit-scrollbar {
+    display: none;
+  }
+
   .projectBlock {
     width: 100%;
     position: static; /* Important: allows videoWrapper to position fixed to viewport */
@@ -201,15 +231,38 @@
 
   .projectInfo {
     width: 100%;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 24px var(--container-padding);
+    flex-direction: column; /* Stack client & title vertically because it's narrow */
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 16px 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.15);
     background: transparent;
     transition: all var(--transition-fast);
     position: relative;
     z-index: 10; /* Important: float above all fixed videos */
+    gap: 4px;
+  }
+
+  /* Progress Bar styling */
+  .progressBar {
+    display: block;
+    position: absolute;
+    top: -1px; /* Overlap top border */
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: transparent;
+    z-index: 15;
+  }
+
+  .progressFill {
+    height: 100%;
+    width: 100%;
+    background: #fff;
+    transform-origin: left center;
+    /* transition removed to let it track smoothly with hardware via JS inline styles, 
+       or keep a very fast linear transition: */
+    /* transition: transform 0.1s linear; */
   }
 
   .projectBlock:last-child .projectInfo {
@@ -217,7 +270,7 @@
   }
 
   /* Typography for desktop row */
-  .client, .title, .category {
+  .client, .title {
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -227,23 +280,26 @@
   }
 
   .title {
-    font-size: 0.85rem; /* Match size on desktop */
+    font-size: 1rem; /* Slightly larger on desktop for title */
   }
 
-  /* Grid alignment for desktop info */
-  .infoLeft { width: 33%; text-align: left; }
-  .infoCenter { width: 33%; text-align: center; }
-  .infoRight { width: 33%; text-align: right; }
+  /* Grid alignment removed because we are stacked flex-column */
+  .infoLeft, .infoCenter { 
+    width: 100%; 
+    text-align: left; 
+  }
 
   /* Hover & Active States for list rows */
   .activeBlock .projectInfo {
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.3); /* Subtle backdrop for active */
   }
 
   .activeBlock .client,
-  .activeBlock .title,
-  .activeBlock .category {
+  .activeBlock .title {
     opacity: 1;
+  }
+
+  .activeBlock .title {
     font-weight: 600; /* Bold for active item */
   }
 

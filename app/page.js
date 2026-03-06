@@ -10,6 +10,7 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isUnmuted, setIsUnmuted] = useState(false);
+  const [videoProgress, setVideoProgress] = useState(0);
   const videoRefs = useRef([]);
 
   useEffect(() => {
@@ -68,8 +69,19 @@ export default function HomePage() {
     setIsUnmuted(!isUnmuted);
   };
 
+  const handleTimeUpdate = (e) => {
+    const video = e.target;
+    if (video.duration) {
+      const progress = (video.currentTime / video.duration) * 100;
+      setVideoProgress(progress);
+    }
+  };
+
   const handleMouseEnter = (idx) => {
     if (window.innerWidth >= 768) {
+      if (activeIndex !== idx) {
+        setVideoProgress(0); // Reset progress when switching
+      }
       setActiveIndex(idx);
       
       // Play the newly active video instantly
@@ -79,7 +91,10 @@ export default function HomePage() {
       
       // Pause others to save resources
       videoRefs.current.forEach((vid, i) => {
-        if (i !== idx && vid) vid.pause();
+        if (i !== idx && vid) {
+          vid.pause();
+          vid.currentTime = 0; // Optional: restart logic
+        }
       });
     }
   };
@@ -110,29 +125,31 @@ export default function HomePage() {
         {isUnmuted ? "MUTE" : "UNMUTE"}
       </button>
 
-      {projects.map((project, i) => {
-        const isActive = activeIndex === i;
-        
-        return (
-          <div 
-            key={project.id} 
-            className={`${styles.projectBlock} ${isActive ? styles.activeBlock : ''}`}
-            onMouseEnter={() => handleMouseEnter(i)}
-          >
-            <div className={styles.videoWrapper}>
-              {project.video_url ? (
-                <video
-                  ref={(el) => (videoRefs.current[i] = el)}
-                  data-index={i}
-                  muted={!isUnmuted || !isActive}
-                  loop
-                  playsInline
-                  autoPlay={i === 0} 
-                  preload="metadata"
-                  src={project.video_url}
-                  className={styles.videoField}
-                  style={{ objectPosition: project.video_alignment || 'center center' }}
-                />
+      <div className={styles.listWrapper}>
+        {projects.map((project, i) => {
+          const isActive = activeIndex === i;
+          
+          return (
+            <div 
+              key={project.id} 
+              className={`${styles.projectBlock} ${isActive ? styles.activeBlock : ''}`}
+              onMouseEnter={() => handleMouseEnter(i)}
+            >
+              <div className={styles.videoWrapper}>
+                {project.video_url ? (
+                  <video
+                    ref={(el) => (videoRefs.current[i] = el)}
+                    data-index={i}
+                    muted={!isUnmuted || !isActive}
+                    loop
+                    playsInline
+                    autoPlay={i === 0} 
+                    preload="metadata"
+                    src={project.video_url}
+                    className={styles.videoField}
+                    style={{ objectPosition: project.video_alignment || 'center center' }}
+                    onTimeUpdate={isActive ? handleTimeUpdate : undefined}
+                  />
               ) : project.thumbnail_url ? (
                 <img
                   src={project.thumbnail_url}
@@ -153,20 +170,26 @@ export default function HomePage() {
               </button>
             </div>
             
-            <Link href={`/work/${project.slug}`} className={styles.projectInfo}>
-              <div className={styles.infoLeft}>
-                <span className={styles.client}>{project.client}</span>
-              </div>
-              <div className={styles.infoCenter}>
-                <span className={styles.title}>{project.title}</span>
-              </div>
-              <div className={styles.infoRight}>
-                <span className={styles.category}>{project.category}</span>
-              </div>
-            </Link>
-          </div>
-        );
-      })}
+              <Link href={`/work/${project.slug}`} className={styles.projectInfo}>
+                {isActive && (
+                  <div className={styles.progressBar}>
+                    <div 
+                      className={styles.progressFill} 
+                      style={{ transform: `scaleX(${videoProgress / 100})` }}
+                    />
+                  </div>
+                )}
+                <div className={styles.infoLeft}>
+                  <span className={styles.client}>{project.client}</span>
+                </div>
+                <div className={styles.infoCenter}>
+                  <span className={styles.title}>{project.title}</span>
+                </div>
+              </Link>
+            </div>
+          );
+        })}
+      </div>
     </section>
   );
 }
