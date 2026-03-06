@@ -101,11 +101,7 @@ export default function WorkPage() {
                           muted
                           loop
                           playsInline
-                          onMouseEnter={(e) => e.target.play()}
-                          onMouseLeave={(e) => {
-                            e.target.pause();
-                            e.target.currentTime = 0;
-                          }}
+                          autoPlay
                         />
                       </>
                     ) : project.thumbnail_url ? (
@@ -143,11 +139,7 @@ export default function WorkPage() {
                           muted
                           loop
                           playsInline
-                          onMouseOver={(e) => e.target.play()}
-                          onMouseOut={(e) => {
-                            e.target.pause();
-                            e.target.currentTime = 0;
-                          }}
+                          autoPlay
                         />
                       </>
                     ) : project.thumbnail_url ? (
