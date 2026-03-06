@@ -97,6 +97,7 @@ export default function WorkPage() {
                       <>
                         <video
                           src={project.video_url}
+                          poster={project.thumbnail_url}
                           className={styles.thumbnail}
                           muted
                           loop
@@ -135,6 +136,7 @@ export default function WorkPage() {
                       <>
                         <video
                           src={project.video_url}
+                          poster={project.thumbnail_url}
                           className={styles.listThumbMedia}
                           muted
                           loop

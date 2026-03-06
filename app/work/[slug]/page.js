@@ -67,6 +67,7 @@ export default function ProjectDetailPage() {
             <div className={styles.heroMediaWrapper}>
               <video
                 src={project.video_url}
+                poster={project.thumbnail_url}
                 className={styles.heroMedia}
                 autoPlay
                 muted={isMuted}

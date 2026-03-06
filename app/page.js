@@ -133,6 +133,7 @@ export default function HomePage() {
                     playsInline
                     autoPlay={i === 0} 
                     preload="metadata"
+                    poster={project.thumbnail_url}
                     src={project.video_url}
                     className={styles.videoField}
                     style={{ objectPosition: project.video_alignment || 'center center' }}
