@@ -31,7 +31,7 @@ export default function Footer() {
     return () => clearInterval(interval);
   }, []);
 
-  if (pathname?.startsWith('/admin')) return null;
+  if (pathname === '/' || pathname?.startsWith('/admin')) return null;
 
   const isLightTheme = pathname?.startsWith('/work');
 
