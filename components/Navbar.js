@@ -56,7 +56,7 @@ export default function Navbar() {
   }, []);
 
   // Don't show navbar on admin pages
-  if (pathname?.startsWith('/admin')) return null;
+  if (pathname?.startsWith('/studio')) return null;
 
   const closeMenu = () => setMenuOpen(false);
   const isLightTheme = pathname?.startsWith('/work');
