@@ -265,3 +265,47 @@
     font-size: 0.8rem;
   }
 }
+
+/* Sound Toggle */
+.soundToggle {
+  position: fixed;
+  bottom: 40px;
+  right: var(--container-padding);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  padding: 10px 16px;
+  border-radius: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  animation: fadeIn 1s ease 1s forwards;
+  opacity: 0;
+}
+
+.soundToggle:hover {
+  background: rgba(255, 255, 255, 1);
+  color: #000;
+  transform: translateY(-2px);
+}
+
+.soundToggle svg {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (max-width: 768px) {
+  .soundToggle {
+    bottom: 24px;
+    padding: 8px 14px;
+    font-size: 0.6rem;
+  }
+}
