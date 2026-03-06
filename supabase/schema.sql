@@ -139,3 +139,36 @@ CREATE TRIGGER update_news_updated_at
 CREATE TRIGGER update_careers_updated_at
   BEFORE UPDATE ON careers
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- ============================================
+-- STUDIO INFO TABLE (Global Settings)
+-- ============================================
+CREATE TABLE IF NOT EXISTS studio_info (
+  id INTEGER PRIMARY KEY CHECK (id = 1), -- Ensure only one row exists
+  intro TEXT,
+  services JSONB DEFAULT '[]'::jsonb,
+  clients JSONB DEFAULT '[]'::jsonb,
+  industry JSONB DEFAULT '[]'::jsonb,
+  press JSONB DEFAULT '[]'::jsonb,
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Insert the single default row if it doesn't exist
+INSERT INTO studio_info (id, intro)
+VALUES (1, 'Hubaab Studios is a creative video production agency based in Srinagar and New Delhi.')
+ON CONFLICT (id) DO NOTHING;
+
+-- Enable RLS
+ALTER TABLE studio_info ENABLE ROW LEVEL SECURITY;
+
+-- Public can read studio info
+CREATE POLICY "Public read studio_info" ON studio_info
+  FOR SELECT USING (true);
+
+-- Admin can update studio info
+CREATE POLICY "Admin update studio_info" ON studio_info
+  FOR UPDATE USING (auth.role() = 'authenticated');
+
+CREATE TRIGGER update_studio_info_updated_at
+  BEFORE UPDATE ON studio_info
+  FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();

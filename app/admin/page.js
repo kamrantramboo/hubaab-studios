@@ -79,26 +79,36 @@ export default function AdminDashboard() {
     const isStudioInfo = table === 'studio_info';
     let dataToSave = { ...formData };
 
-    // Handle Studio Info specific payload parsing (convert formatted strings back to objects where needed)
+    // Handle Studio Info specific payload parsing
     if (isStudioInfo) {
-      const parseJsonArray = (str) => {
-        try {
-          // If it's already an array, leave it
-          if (Array.isArray(str)) return str;
-          // If it's empty, return empty array
-          if (!str || str.trim() === '') return [];
-          // Try parsing
-          return JSON.parse(str);
-        } catch {
-          // Fallback: Split by newline if JSON parse fails
-          return str.split('\n').map(s => s.trim()).filter(Boolean);
-        }
+      const parseTextToArray = (val) => {
+        if (Array.isArray(val)) return val;
+        if (!val || typeof val !== 'string') return [];
+        // Support splitting by newlines and stripping empty rows
+        return val.split('\n').map(s => s.trim()).filter(Boolean);
+      };
+
+      const parseServices = (val) => {
+        if (Array.isArray(val)) return val;
+        if (!val || typeof val !== 'string') return [];
+        // Expecting format "Title: Description" per line
+        return val.split('\n').map(line => {
+          const parts = line.split(':');
+          if (parts.length >= 2) {
+            return {
+              title: parts[0].trim(),
+              desc: parts.slice(1).join(':').trim()
+            };
+          }
+          // Fallback if they just type a string with no colon
+          return { title: line.trim(), desc: '' };
+        }).filter(s => s.title);
       };
       
-      dataToSave.services = typeof dataToSave.services === 'string' ? parseJsonArray(dataToSave.services) : dataToSave.services;
-      dataToSave.clients = typeof dataToSave.clients === 'string' ? parseJsonArray(dataToSave.clients) : dataToSave.clients;
-      dataToSave.industry = typeof dataToSave.industry === 'string' ? parseJsonArray(dataToSave.industry) : dataToSave.industry;
-      dataToSave.press = typeof dataToSave.press === 'string' ? parseJsonArray(dataToSave.press) : dataToSave.press;
+      dataToSave.services = parseServices(dataToSave.services);
+      dataToSave.clients = parseTextToArray(dataToSave.clients);
+      dataToSave.industry = parseTextToArray(dataToSave.industry);
+      dataToSave.press = parseTextToArray(dataToSave.press);
     }
 
     let error;
@@ -322,7 +332,15 @@ function AdminForm({ type, item, onSave, onCancel }) {
               <textarea
                 className="form-input form-textarea"
                 style={{ minHeight: '120px' }}
-                value={form[field.key] !== undefined ? (typeof form[field.key] === 'object' ? JSON.stringify(form[field.key], null, 2) : form[field.key]) : ''}
+                value={
+                  form[field.key] !== undefined 
+                    ? (Array.isArray(form[field.key]) 
+                        ? (field.key === 'services' 
+                            ? form[field.key].map(s => `${s.title}: ${s.desc || ''}`).join('\n') 
+                            : form[field.key].join('\n')) 
+                        : form[field.key]) 
+                    : ''
+                }
                 onChange={(e) => update(field.key, e.target.value, field.type)}
                 placeholder={field.placeholder}
               />
@@ -416,10 +434,10 @@ function getFormFields(type) {
     case 'Studio Info':
       return [
         { key: 'intro', label: 'Studio Intro (Main About Text)', type: 'textarea', placeholder: 'Hubaab Studios is...' },
-        { key: 'services', label: 'Services Array (JSON Format)', type: 'textarea', placeholder: '[\n  "Director",\n  "Cinematographer"\n]' },
-        { key: 'clients', label: 'Clients Array (JSON Format)', type: 'textarea', placeholder: '[\n  "Nike",\n  "Adidas"\n]' },
-        { key: 'industry', label: 'Industry Tags (JSON Format)', type: 'textarea', placeholder: '[\n  "Commercial",\n  "Fashion"\n]' },
-        { key: 'press', label: 'Press & Features (JSON Format)', type: 'textarea', placeholder: '[\n  "Vogue",\n  "GQ"\n]' },
+        { key: 'services', label: 'Services (Format -> Title: Description)', type: 'textarea', placeholder: 'Director: Leading the creative vision\nCinematographer: Capturing the light' },
+        { key: 'clients', label: 'Clients (One per line)', type: 'textarea', placeholder: 'Nike\nAdidas\nApple' },
+        { key: 'industry', label: 'Industry Tags (One per line)', type: 'textarea', placeholder: 'Commercial\nFashion\nFilm' },
+        { key: 'press', label: 'Press & Features (One per line)', type: 'textarea', placeholder: 'Vogue Magazine\nGQ Editor Choice' },
       ];
     default:
       return [];
