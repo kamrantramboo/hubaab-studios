@@ -126,6 +126,30 @@ export default function WorkPage() {
                   href={`/work/${project.slug}`}
                   className={styles.listRow}
                 >
+                  <div className={styles.listThumb}>
+                    {project.video_url ? (
+                      <video
+                        src={project.video_url}
+                        className={styles.listThumbMedia}
+                        muted
+                        loop
+                        playsInline
+                        onMouseOver={(e) => e.target.play()}
+                        onMouseOut={(e) => {
+                          e.target.pause();
+                          e.target.currentTime = 0;
+                        }}
+                      />
+                    ) : project.thumbnail_url ? (
+                      <img
+                        src={project.thumbnail_url}
+                        alt={project.title}
+                        className={styles.listThumbMedia}
+                      />
+                    ) : (
+                      <div className={styles.placeholder}>?</div>
+                    )}
+                  </div>
                   <div className={`${styles.listCol} ${styles.listClient}`}>
                     {project.client}
                   </div>

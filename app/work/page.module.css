@@ -139,16 +139,31 @@
 
 .listRow {
   display: grid;
-  grid-template-columns: 2fr 3fr 1fr;
-  padding: 24px 0;
+  grid-template-columns: 80px 1.5fr 3fr 1fr;
+  padding: 16px 0;
   border-bottom: 1px solid var(--border);
   text-decoration: none;
   transition: opacity var(--transition-fast);
   align-items: center;
+  gap: 20px;
 }
 
 .listRow:hover {
   opacity: 0.6;
+}
+
+.listThumb {
+  width: 80px;
+  aspect-ratio: 16 / 9;
+  background-color: var(--bg-secondary);
+  overflow: hidden;
+  position: relative;
+}
+
+.listThumbMedia {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .listCol {
@@ -182,8 +197,12 @@
   }
   
   .listRow {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 60px 1fr 1fr;
     gap: 12px;
+  }
+
+  .listThumb {
+    width: 60px;
   }
 
   .listCategory {
