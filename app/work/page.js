@@ -11,6 +11,7 @@ export default function WorkPage() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState('All');
+  const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
 
   useEffect(() => {
     async function fetchProjects() {
@@ -40,7 +41,6 @@ export default function WorkPage() {
     <div className={`${styles.page} light-theme`}>
       <div className="container">
 
-
         {/* Filter Bar */}
         <div className={`${styles.filterBar} animate-fade-in-up stagger-1`}>
           <div className={styles.filterLabel}>Type</div>
@@ -58,13 +58,23 @@ export default function WorkPage() {
             ))}
           </div>
           <div className={styles.filterViews}>
-            <button className={`${styles.filterBtn} ${styles.active}`}>Grid</button>
+            <button 
+              className={`${styles.filterBtn} ${viewMode === 'grid' ? styles.active : ''}`}
+              onClick={() => setViewMode('grid')}
+            >
+              Grid
+            </button>
             <span className={styles.comma}>, </span>
-            <button className={styles.filterBtn}>List</button>
+            <button 
+              className={`${styles.filterBtn} ${viewMode === 'list' ? styles.active : ''}`}
+              onClick={() => setViewMode('list')}
+            >
+              List
+            </button>
           </div>
         </div>
 
-        {/* Projects Grid */}
+        {/* Projects Grid / List */}
         {loading ? (
           <div className={styles.grid}>
             {[...Array(8)].map((_, i) => (
@@ -72,41 +82,63 @@ export default function WorkPage() {
             ))}
           </div>
         ) : filtered.length > 0 ? (
-          <div className={styles.grid}>
-            {filtered.map((project) => (
-              <Link
-                key={project.id}
-                href={`/work/${project.slug}`}
-                className={`${styles.projectCard} ${project.is_vertical ? styles.isVertical : ''}`}
-              >
-                <div className={styles.thumbnailWrapper}>
-                  {project.video_url ? (
-                    <video
-                      src={project.video_url}
-                      className={styles.thumbnail}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                    />
-                  ) : project.thumbnail_url ? (
-                    <img
-                      src={project.thumbnail_url}
-                      alt={project.title}
-                      className={styles.thumbnail}
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className={styles.placeholder}>{project.client || project.title}</div>
-                  )}
-                </div>
-                <div className={styles.info}>
-                  <div className={styles.client}>{project.client}</div>
-                  <div className={styles.title}>"{project.title}"</div>
-                </div>
-              </Link>
-            ))}
-          </div>
+          viewMode === 'grid' ? (
+            <div className={styles.grid}>
+              {filtered.map((project) => (
+                <Link
+                  key={project.id}
+                  href={`/work/${project.slug}`}
+                  className={`${styles.projectCard} ${project.is_vertical ? styles.isVertical : ''}`}
+                >
+                  <div className={styles.thumbnailWrapper}>
+                    {project.video_url ? (
+                      <video
+                        src={project.video_url}
+                        className={styles.thumbnail}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                      />
+                    ) : project.thumbnail_url ? (
+                      <img
+                        src={project.thumbnail_url}
+                        alt={project.title}
+                        className={styles.thumbnail}
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className={styles.placeholder}>{project.client || project.title}</div>
+                    )}
+                  </div>
+                  <div className={styles.info}>
+                    <div className={styles.client}>{project.client}</div>
+                    <div className={styles.title}>"{project.title}"</div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className={styles.listView}>
+              {filtered.map((project) => (
+                <Link
+                  key={project.id}
+                  href={`/work/${project.slug}`}
+                  className={styles.listRow}
+                >
+                  <div className={`${styles.listCol} ${styles.listClient}`}>
+                    {project.client}
+                  </div>
+                  <div className={`${styles.listCol} ${styles.listTitle}`}>
+                    "{project.title}"
+                  </div>
+                  <div className={`${styles.listCol} ${styles.listCategory}`}>
+                    {project.category}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )
         ) : (
           <div className="empty-state">
             <h3>No projects yet</h3>

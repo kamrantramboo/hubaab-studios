@@ -130,6 +130,45 @@
   aspect-ratio: 3 / 4;
 }
 
+/* List View */
+.listView {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.listRow {
+  display: grid;
+  grid-template-columns: 2fr 3fr 1fr;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  transition: opacity var(--transition-fast);
+  align-items: center;
+}
+
+.listRow:hover {
+  opacity: 0.6;
+}
+
+.listCol {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-primary);
+}
+
+.listTitle {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.listCategory {
+  color: var(--text-muted);
+  text-align: right;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .grid {
@@ -140,6 +179,15 @@
 @media (max-width: 768px) {
   .grid {
     grid-template-columns: 1fr;
+  }
+  
+  .listRow {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .listCategory {
+    display: none;
   }
   
   .filterBar {
