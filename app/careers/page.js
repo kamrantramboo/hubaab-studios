@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
+import Link from 'next/link';
 import styles from './page.module.css';
 
 export default function CareersPage() {
@@ -54,9 +55,12 @@ export default function CareersPage() {
                   {role.description && (
                     <p className="career-desc">{role.description}</p>
                   )}
-                  <a href={`mailto:careers@hubaabstudios.com?subject=Application: ${role.title}`} className="btn btn-outline">
+                  <Link 
+                    href={`/apply?role=${encodeURIComponent(role.title)}`} 
+                    className="btn btn-outline"
+                  >
                     Apply
-                  </a>
+                  </Link>
                 </div>
               ))}
             </div>

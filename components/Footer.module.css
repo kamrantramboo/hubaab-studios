@@ -192,8 +192,8 @@
 
 @media (max-width: 768px) {
   .footer {
-    padding: 60px 0 32px;
-    margin-top: 80px;
+    padding: 120px 0 32px;
+    margin-top: 0;
   }
 
   .columns {

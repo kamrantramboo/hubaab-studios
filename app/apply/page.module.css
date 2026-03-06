@@ -1,0 +1,54 @@
+.page {
+  padding-top: calc(var(--nav-height) + 120px);
+  padding-bottom: 120px;
+  min-height: 100vh;
+}
+
+.formWrapper {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.formTitle {
+  font-size: 2.5rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+  text-transform: none;
+}
+
+.roleSub {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 48px;
+}
+
+.roleSub strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.actions {
+  margin-top: 40px;
+}
+
+.successIcon {
+  font-size: 3rem;
+  color: var(--success);
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding-top: calc(var(--nav-height) + 60px);
+  }
+  
+  .formTitle {
+    font-size: 2rem;
+  }
+}

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import styles from './page.module.css';
 
-const tabs = ['Projects', 'Careers', 'Inquiries', 'Studio Info'];
+const tabs = ['Projects', 'Careers', 'Inquiries', 'Applications', 'Studio Info'];
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -232,7 +232,7 @@ export default function AdminDashboard() {
                     ))}
                     <td>
                       <div className={styles.actions}>
-                        {(activeTab !== 'Inquiries' && activeTab !== 'Studio Info') && (
+                        {(activeTab !== 'Inquiries' && activeTab !== 'Applications' && activeTab !== 'Studio Info') && (
                           <button className={styles.editBtn} onClick={() => handleEdit(item)}>Edit</button>
                         )}
                         {activeTab === 'Studio Info' && (
@@ -293,6 +293,29 @@ function getColumns(tab) {
             <details style={{ cursor: 'pointer', maxWidth: '300px' }}>
               <summary style={{ outline: 'none', color: 'var(--text-primary)' }}>{v.substring(0, 50)}...</summary>
               <div style={{ marginTop: '8px', padding: '8px', background: 'rgba(255,255,255,0.05)', borderRadius: '4px', whiteSpace: 'pre-wrap', color: 'var(--text-secondary)' }}>
+                {v}
+              </div>
+            </details>
+          ) : v
+        ) : '—' },
+      ];
+    case 'Applications':
+      return [
+        { key: 'role_title', label: 'Role' },
+        { key: 'name', label: 'Candidate' },
+        { key: 'email', label: 'Email' },
+        { key: 'portfolio_url', label: 'Portfolio', render: (v) => v ? <a href={v} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-primary)', textDecoration: 'underline' }}>Link</a> : '—' },
+        { key: 'resume_url', label: 'Resume', render: (v) => v ? <a href={v} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-primary)', textDecoration: 'underline' }}>Link</a> : '—' },
+        { key: 'status', label: 'Status', render: (v) => (
+          <span className={`badge ${v === 'new' ? 'badge-success' : v === 'contacted' ? 'badge-warning' : 'badge-error'}`}>
+            {v || 'new'}
+          </span>
+        )},
+        { key: 'message', label: 'Notes', render: (v) => v ? (
+          v.length > 30 ? (
+            <details style={{ cursor: 'pointer', maxWidth: '200px' }}>
+              <summary style={{ outline: 'none', color: 'var(--text-primary)' }}>View Message</summary>
+              <div style={{ marginTop: '8px', padding: '8px', background: 'rgba(255,255,255,0.05)', borderRadius: '4px', whiteSpace: 'pre-wrap', color: 'var(--text-secondary)', fontSize: '0.75rem' }}>
                 {v}
               </div>
             </details>
@@ -424,10 +447,10 @@ function getFormFields(type) {
       ];
     case 'Studio Info':
       return [
-        { key: 'intro', label: 'Studio Intro (Main About Text)', type: 'textarea', placeholder: 'Hubaab Studios is...' },
-        { key: 'services', label: 'Services (Format -> Title: Description)', type: 'textarea', placeholder: 'Director: Leading the creative vision\nCinematographer: Capturing the light' },
-        { key: 'clients', label: 'Clients (One per line)', type: 'textarea', placeholder: 'Nike\nAdidas\nApple' },
-        { key: 'industry', label: 'Industry Tags (One per line)', type: 'textarea', placeholder: 'Commercial\nFashion\nFilm' },
+        { key: 'intro', label: 'Studio Intro', type: 'textarea', placeholder: 'Hubaab Studio is...' },
+        { key: 'services', label: 'Services (Format: Title: Description)', type: 'textarea', placeholder: 'Cinematography: We shoot...\nPhotography: We capture...' },
+        { key: 'clients', label: 'Clients (Format: Name | Logo URL, one per line)', type: 'textarea', placeholder: 'Nike | https://example.com/nike.png\nAdidas | https://example.com/adidas.png' },
+        { key: 'industry', label: 'Industry Tags (One per line)', type: 'textarea', placeholder: 'Fashion\nDocumentary' },
         { key: 'press', label: 'Press & Features (One per line)', type: 'textarea', placeholder: 'Vogue Magazine\nGQ Editor Choice' },
       ];
     default:
