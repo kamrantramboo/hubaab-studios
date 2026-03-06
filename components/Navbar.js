@@ -52,7 +52,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ''} ${isLightTheme ? 'light-theme' : ''}`}>
+      <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ''} ${menuOpen ? styles.menuOpen : ''} ${isLightTheme ? 'light-theme' : ''}`}>
         <div className={styles.inner}>
           <Link href="/" className={styles.logo} onClick={closeMenu}>
             hubaab studio

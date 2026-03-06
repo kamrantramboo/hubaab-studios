@@ -17,6 +17,12 @@
   -webkit-backdrop-filter: none;
 }
 
+.navbar.menuOpen {
+  background-color: var(--bg-primary) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
 .inner {
   max-width: var(--max-width);
   margin: 0 auto;
