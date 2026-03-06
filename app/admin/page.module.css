@@ -1,0 +1,130 @@
+.sidebarHeader {
+  margin-bottom: 32px;
+}
+
+.sidebarTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.sidebarSubtitle {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.sidebarNav {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 32px;
+}
+
+.logoutBtn {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 16px;
+  text-align: left;
+  transition: color var(--transition-fast);
+}
+
+.logoutBtn:hover {
+  color: var(--error);
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.pageTitle {
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+.mobileTabs {
+  display: none;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.editBtn {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  background: none;
+  border: 1px solid var(--border);
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.editBtn:hover {
+  border-color: var(--text-primary);
+  color: var(--text-primary);
+}
+
+.deleteBtn {
+  font-size: 0.8rem;
+  color: var(--error);
+  background: none;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.deleteBtn:hover {
+  border-color: var(--error);
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+.formPanel {
+  max-width: 600px;
+  padding: 32px;
+  border: 1px solid var(--border);
+  margin-bottom: 32px;
+  animation: fadeIn 0.3s ease;
+}
+
+.formTitle {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+.formActions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 1024px) {
+  .mobileTabs {
+    display: flex;
+  }
+
+  .topBar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}

@@ -1,0 +1,234 @@
+/* ============================================
+   Navbar — Bodeyco-inspired
+   ============================================ */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: var(--nav-height);
+  transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+}
+
+.navbar.scrolled {
+  background-color: transparent;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.logo {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: lowercase;
+  color: var(--text-primary);
+  text-decoration: none;
+  z-index: 101;
+}
+
+.logo:hover {
+  color: var(--text-primary);
+}
+
+/* Desktop Nav — comma separated */
+.desktopNav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.navItem {
+  display: inline-flex;
+  align-items: center;
+}
+
+.navLink {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.navLink:hover {
+  color: var(--text-primary);
+}
+
+.navLink.active {
+  color: var(--text-primary);
+}
+
+.comma {
+  color: var(--text-dim);
+  margin-right: 6px;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+/* Right Side */
+.right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.ctaLink {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.ctaLink:hover {
+  color: var(--text-primary);
+}
+
+/* Menu Button — text-based like Bodeyco */
+.menuButton {
+  display: none;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  z-index: 101;
+  font-family: inherit;
+  transition: color var(--transition-fast);
+}
+
+.menuButton:hover {
+  color: var(--text-primary);
+}
+
+/* Mobile Menu — Bodeyco-style slide down */
+.mobileMenu {
+  position: fixed;
+  top: var(--nav-height);
+  left: 0;
+  right: 0;
+  z-index: 99;
+  background-color: var(--bg-primary);
+  max-height: 0px;
+  overflow: hidden;
+  pointer-events: none;
+  transition: max-height 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobileMenuOpen {
+  max-height: 100dvh;
+  pointer-events: auto;
+  overflow-y: auto;
+}
+
+.mobileMenuInner {
+  padding: 40px var(--container-padding) 60px;
+  opacity: 0;
+  transition: opacity 300ms ease 300ms;
+}
+
+.mobileMenuContentVisible {
+  opacity: 1;
+}
+
+/* Menu Sections */
+.menuSection {
+  margin-bottom: 32px;
+}
+
+.menuSectionBorder {
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
+.menuSectionTitle {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.menuLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.menuLink {
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.menuLink:hover {
+  color: var(--text-secondary);
+}
+
+/* Contact items in mobile menu */
+.menuContactGroup {
+  margin-bottom: 16px;
+}
+
+.menuContactLabel {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.menuContactLink {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.menuContactLink:hover {
+  color: var(--text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .desktopNav {
+    display: none;
+  }
+
+  .ctaLink {
+    display: none;
+  }
+
+  .menuButton {
+    display: block;
+  }
+}

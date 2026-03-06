@@ -1,0 +1,102 @@
+.page {
+  padding-top: calc(var(--nav-height) + 60px);
+  min-height: 100vh;
+}
+
+.header {
+  margin-bottom: 48px;
+}
+
+.header h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+
+.headerDesc {
+  max-width: 600px;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 8px;
+}
+
+.headerAlt {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.headerAlt a {
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.formArea {
+  max-width: 600px;
+  padding-bottom: 80px;
+}
+
+.stepContent {
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+.stepTitle {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.stepDesc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+.formNav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.spacer {
+  flex: 1;
+}
+
+/* Success */
+.success {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.success h1 {
+  font-size: 3rem;
+  margin-bottom: 16px;
+  animation: fadeInUp 0.6s ease;
+}
+
+.success p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  animation: fadeInUp 0.6s 0.1s ease forwards;
+  opacity: 0;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

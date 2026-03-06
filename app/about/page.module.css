@@ -1,0 +1,144 @@
+/* About Page — Bodeyco-inspired */
+.page {
+  padding-top: calc(var(--nav-height) + 60px);
+  min-height: 100vh;
+}
+
+/* Intro Section — large statement text */
+.introSection {
+  margin-bottom: 100px;
+}
+
+.introText {
+  font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 800px;
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+/* Section */
+.section {
+  margin-bottom: 80px;
+}
+
+.sectionTitle {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Services Grid — 3 columns like Bodeyco */
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.serviceItem {
+  padding: 0;
+}
+
+.serviceTitle {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.serviceDesc {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.6;
+}
+
+/* Info Grid — Clients + Industry */
+.infoGrid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 60px;
+}
+
+/* Clients Grid */
+.clientsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px 40px;
+}
+
+.clientName {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.5);
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  transition: color var(--transition-fast);
+}
+
+.clientName:hover {
+  color: var(--text-primary);
+}
+
+/* Industry Tags */
+.industryList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.industryTag {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.5);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  transition: color var(--transition-fast);
+}
+
+.industryTag:hover {
+  color: var(--text-primary);
+}
+
+/* Press */
+.pressList {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.pressList a {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  transition: all var(--transition-fast);
+  display: block;
+}
+
+.pressList a:hover {
+  color: var(--text-primary);
+  padding-left: 8px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .servicesGrid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .clientsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .infoGrid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}

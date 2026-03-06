@@ -1,0 +1,68 @@
+.loaderContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #ffffff; /* Pure white to match the image background */
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 1.5s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.containerFadeOut {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.logoWrapper {
+  position: relative;
+  width: 500px; /* Adjust size of logo */
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform-origin: center;
+  transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+  will-change: transform;
+}
+
+.leftImage {
+  clip-path: inset(0 50% 0 0); /* Shows only the left half */
+}
+
+.rightImage {
+  clip-path: inset(0 0 0 50%); /* Shows only the right half */
+}
+
+.shrink {
+  transform: scale(0.85); /* The slight shrink before splitting */
+}
+
+/* The actual split animation */
+.splitLeft {
+  transform: scale(0.85) translateX(-150vw);
+}
+
+.splitRight {
+  transform: scale(0.85) translateX(150vw);
+}
+
+@media (max-width: 768px) {
+  .logoWrapper {
+    width: 250px;
+    height: 250px;
+  }
+}

@@ -1,0 +1,119 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { supabase } from '@/lib/supabase';
+import styles from './page.module.css';
+
+const categories = ['All', 'Cinematic', 'Commercial', 'Music', 'Fashion', 'Editorial', 'Film'];
+
+export default function WorkPage() {
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [activeFilter, setActiveFilter] = useState('All');
+
+  useEffect(() => {
+    async function fetchProjects() {
+      try {
+        const { data, error } = await supabase
+          .from('projects')
+          .select('*')
+          .order('sort_order', { ascending: true });
+
+        if (error) throw error;
+        setProjects(data || []);
+      } catch (err) {
+        console.log('Supabase not connected yet');
+        setProjects([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProjects();
+  }, []);
+
+  const filtered = activeFilter === 'All'
+    ? projects
+    : projects.filter(p => p.category === activeFilter);
+
+  return (
+    <div className={`${styles.page} light-theme`}>
+      <div className="container">
+
+
+        {/* Filter Bar */}
+        <div className={`${styles.filterBar} animate-fade-in-up stagger-1`}>
+          <div className={styles.filterLabel}>Type</div>
+          <div className={styles.filterOptions}>
+            {categories.map((cat, i) => (
+              <span key={cat}>
+                <button
+                  className={`${styles.filterBtn} ${activeFilter === cat ? styles.active : ''}`}
+                  onClick={() => setActiveFilter(cat)}
+                >
+                  {cat}
+                </button>
+                {i < categories.length - 1 && <span className={styles.comma}>, </span>}
+              </span>
+            ))}
+          </div>
+          <div className={styles.filterViews}>
+            <button className={`${styles.filterBtn} ${styles.active}`}>Grid</button>
+            <span className={styles.comma}>, </span>
+            <button className={styles.filterBtn}>List</button>
+          </div>
+        </div>
+
+        {/* Projects Grid */}
+        {loading ? (
+          <div className={styles.grid}>
+            {[...Array(8)].map((_, i) => (
+              <div key={i} className={styles.skeleton}></div>
+            ))}
+          </div>
+        ) : filtered.length > 0 ? (
+          <div className={styles.grid}>
+            {filtered.map((project) => (
+              <Link
+                key={project.id}
+                href={`/work/${project.slug}`}
+                className={styles.projectCard}
+              >
+                <div className={styles.thumbnailWrapper}>
+                  {project.video_url ? (
+                    <video
+                      src={project.video_url}
+                      className={styles.thumbnail}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                    />
+                  ) : project.thumbnail_url ? (
+                    <img
+                      src={project.thumbnail_url}
+                      alt={project.title}
+                      className={styles.thumbnail}
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className={styles.placeholder}>{project.client || project.title}</div>
+                  )}
+                </div>
+                <div className={styles.info}>
+                  <div className={styles.client}>{project.client}</div>
+                  <div className={styles.title}>"{project.title}"</div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <div className="empty-state">
+            <h3>No projects yet</h3>
+            <p>Projects will appear here once added via the admin dashboard</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
