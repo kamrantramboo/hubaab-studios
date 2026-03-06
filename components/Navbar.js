@@ -16,6 +16,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [heroVisible, setHeroVisible] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,6 +34,15 @@ export default function Navbar() {
     }
     return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
+
+  // Watch hero visibility from homepage
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setHeroVisible(document.body.dataset.heroVisible === 'true');
+    });
+    observer.observe(document.body, { attributes: true, attributeFilter: ['data-hero-visible'] });
+    return () => observer.disconnect();
+  }, []);
 
   // Don't show navbar on admin pages
   if (pathname?.startsWith('/admin')) return null;
@@ -64,7 +74,7 @@ export default function Navbar() {
           </div>
 
           <div className={styles.right}>
-            {pathname !== '/' && (
+            {!(pathname === '/' && heroVisible) && (
               <Link href="/inquiry" className={styles.ctaLink}>
                 Start a project
               </Link>

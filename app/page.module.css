@@ -160,7 +160,7 @@
   height: 100vh;
   height: 100svh;
   overflow-y: auto;
-  scroll-snap-type: y proximity;
+  scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
   background-color: #000;
   /* Hide scrollbar but keep functionality */
@@ -365,8 +365,6 @@
   letter-spacing: 0.1em;
   cursor: pointer;
   transition: all var(--transition-fast);
-  animation: fadeIn 1s ease 1s forwards;
-  opacity: 0;
 }
 
 .soundToggle:hover {

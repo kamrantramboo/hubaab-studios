@@ -12,6 +12,7 @@ export default function HomePage() {
   const [isMuted, setIsMuted] = useState(true);
   const videoRefs = useRef([]);
   const sectionRef = useRef(null);
+  const heroRef = useRef(null);
 
   useEffect(() => {
     async function fetchFeatured() {
@@ -61,12 +62,31 @@ export default function HomePage() {
     return () => videos.forEach((v) => observer.unobserve(v));
   }, [projects]);
 
+  // Track hero visibility for Navbar CTA
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        document.body.dataset.heroVisible = entry.isIntersecting ? 'true' : 'false';
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(hero);
+    return () => {
+      observer.unobserve(hero);
+      delete document.body.dataset.heroVisible;
+    };
+  }, []);
+
   return (
     <>
       {/* Showcase Section — Integrated snapping experience */}
       <section className={styles.showcase} ref={sectionRef}>
         {/* Hero — first snap item */}
-        <div className={styles.heroSnap}>
+        <div className={styles.heroSnap} ref={heroRef}>
           <div className={styles.heroBg}>
             {projects[0]?.video_url && (
               <video
