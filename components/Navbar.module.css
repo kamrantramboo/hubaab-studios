@@ -127,6 +127,7 @@
   top: var(--nav-height);
   left: 0;
   right: 0;
+  bottom: 0;
   z-index: 99;
   background-color: var(--bg-primary);
   max-height: 0px;
@@ -225,7 +226,8 @@
   }
 
   .ctaLink {
-    display: none;
+    display: inline;
+    font-size: 0.6rem;
   }
 
   .menuButton {
