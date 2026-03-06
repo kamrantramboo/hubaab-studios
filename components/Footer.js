@@ -23,9 +23,7 @@ export default function Footer() {
       };
       setCurrentTime({
         ist: formatTime('Asia/Kolkata'),
-        est: formatTime('America/New_York'),
-        pst: formatTime('America/Los_Angeles'),
-        gmt: formatTime('Europe/London'),
+        delhi: formatTime('Asia/Kolkata'),
       });
     };
     updateTimes();
@@ -74,10 +72,7 @@ export default function Footer() {
           <div className={styles.column}>
             <h4 className={styles.colTitle}>Platforms</h4>
             <nav className={styles.colLinks}>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
-              <a href="https://vimeo.com" target="_blank" rel="noopener noreferrer">Vimeo</a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">YouTube</a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a href="https://www.instagram.com/hubaab_studios/?hl=en" target="_blank" rel="noopener noreferrer">Instagram</a>
             </nav>
           </div>
 
@@ -85,31 +80,26 @@ export default function Footer() {
             <h4 className={styles.colTitle}>Location</h4>
             <div className={styles.locations}>
               <div className={styles.location}>
-                <span className={styles.city}>Local</span>
+                <span className={styles.city}>Srinagar</span>
                 <span className={styles.time}>{currentTime.ist || '--:--:--'} IST</span>
               </div>
               <div className={styles.location}>
-                <span className={styles.city}>New York</span>
-                <span className={styles.time}>{currentTime.est || '--:--:--'} EST</span>
-              </div>
-              <div className={styles.location}>
-                <span className={styles.city}>Los Angeles</span>
-                <span className={styles.time}>{currentTime.pst || '--:--:--'} PST</span>
-              </div>
-              <div className={styles.location}>
-                <span className={styles.city}>London</span>
-                <span className={styles.time}>{currentTime.gmt || '--:--:--'} GMT</span>
+                <span className={styles.city}>Delhi</span>
+                <span className={styles.time}>{currentTime.delhi || '--:--:--'} IST</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Newsletter */}
         <div className={styles.newsletter}>
           <h4 className={styles.colTitle}>Keep in Touch</h4>
           <p className={styles.newsletterText}>
             Sign up to receive occasional updates from hubaab studio, including recent projects, studio work, and behind-the-scenes content.
           </p>
+          <form className={styles.newsletterForm} onSubmit={(e) => e.preventDefault()}>
+            <input type="email" placeholder="Email Address" className={styles.newsletterInput} />
+            <button type="submit" className={styles.newsletterSubmit}>Join</button>
+          </form>
         </div>
 
         {/* Bottom */}
