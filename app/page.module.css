@@ -207,8 +207,12 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  .hero {
+    height: 100svh;
+  }
+
   .videoItem {
-    height: 70vh;
+    height: 100svh;
   }
 
   .videoOverlayInfo {
