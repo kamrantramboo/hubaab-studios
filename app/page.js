@@ -9,7 +9,7 @@ export default function HomePage() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isUnmuted, setIsUnmuted] = useState(false);
+  const [unmutedVideoIndex, setUnmutedVideoIndex] = useState(null);
   const [videoProgress, setVideoProgress] = useState(0);
   const videoRefs = useRef([]);
   const sectionRefs = useRef([]);
@@ -70,10 +70,11 @@ export default function HomePage() {
     return () => sections.forEach((s) => observer.unobserve(s));
   }, [projects]);
 
-  const toggleGlobalMute = (e) => {
+  const toggleMute = (e, index) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsUnmuted(!isUnmuted);
+    // If clicking the currently unmuted video, mute it. Otherwise, unmute this specific video.
+    setUnmutedVideoIndex(prevIndex => prevIndex === index ? null : index);
   };
 
   const handleTimeUpdate = (e) => {
@@ -105,8 +106,11 @@ export default function HomePage() {
 
   return (
     <section className={styles.homeContainer}>
-      <button className={styles.desktopSoundToggle} onClick={toggleGlobalMute}>
-        {isUnmuted ? "MUTE" : "UNMUTE"}
+      <button 
+        className={styles.desktopSoundToggle} 
+        onClick={(e) => toggleMute(e, activeIndex)}
+      >
+        {unmutedVideoIndex === activeIndex ? "MUTE" : "UNMUTE"}
       </button>
 
       {/* Main Scrolling Feed of 100vh Videos */}
@@ -124,7 +128,7 @@ export default function HomePage() {
                 {project.video_url ? (
                   <video
                     ref={(el) => (videoRefs.current[i] = el)}
-                    muted={!isUnmuted || !isActive}
+                    muted={unmutedVideoIndex !== i}
                     loop
                     playsInline
                     autoPlay={i === 0} 
@@ -139,8 +143,11 @@ export default function HomePage() {
                 ) : <div className={styles.placeholderBg} />}
                 
                 {/* Mobile UI Overlay directly on video */}
-                <button className={styles.mobileSoundToggle} onClick={toggleGlobalMute}>
-                  {isUnmuted ? "MUTE" : "UNMUTE"}
+                <button 
+                  className={styles.mobileSoundToggle} 
+                  onClick={(e) => toggleMute(e, i)}
+                >
+                  {unmutedVideoIndex === i ? "MUTE" : "UNMUTE"}
                 </button>
                 <div className={styles.mobileProjectInfo}>
                   <div className={styles.infoContent}>

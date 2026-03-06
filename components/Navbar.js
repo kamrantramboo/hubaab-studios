@@ -74,11 +74,9 @@ export default function Navbar() {
           </div>
 
           <div className={styles.right}>
-            {!(pathname === '/' && heroVisible) && (
-              <Link href="/inquiry" className={styles.ctaLink}>
-                Start a project
-              </Link>
-            )}
+            <Link href="/inquiry" className={styles.ctaLink}>
+              Start a project
+            </Link>
             <button
               className={styles.menuButton}
               onClick={() => setMenuOpen(!menuOpen)}
