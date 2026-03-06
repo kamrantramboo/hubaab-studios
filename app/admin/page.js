@@ -233,6 +233,7 @@ function getColumns(tab) {
         { key: 'category', label: 'Category' },
         { key: 'featured', label: 'Featured' },
         { key: 'is_vertical', label: 'Vertical' },
+        { key: 'video_alignment', label: 'Align' },
         { key: 'sort_order', label: 'Order' },
       ];
     case 'News':
@@ -338,7 +339,7 @@ function AdminForm({ type, item, onSave, onCancel }) {
 function getDefaultForm(type) {
   switch (type) {
     case 'Projects':
-      return { title: '', client: '', slug: '', category: 'Cinematic', description: '', services: '', thumbnail_url: '', video_url: '', featured: false, is_vertical: false, sort_order: 0 };
+      return { title: '', client: '', slug: '', category: 'Cinematic', description: '', services: '', thumbnail_url: '', video_url: '', featured: false, is_vertical: false, video_alignment: 'top center', sort_order: 0 };
     case 'News':
       return { title: '', slug: '', excerpt: '', content: '', image_url: '', published: false, published_at: '' };
     case 'Careers':
@@ -362,6 +363,7 @@ function getFormFields(type) {
         { key: 'video_url', label: 'Video URL', placeholder: 'https://...' },
         { key: 'featured', label: 'Featured', type: 'checkbox', placeholder: 'Show on home page' },
         { key: 'is_vertical', label: 'Vertical Layout', type: 'checkbox', placeholder: 'This is a portrait/vertical video' },
+        { key: 'video_alignment', label: 'Video Crop Focus', type: 'select', options: ['top center', 'center center', 'bottom center'] },
         { key: 'sort_order', label: 'Sort Order', type: 'number', placeholder: '0' },
       ];
     case 'News':

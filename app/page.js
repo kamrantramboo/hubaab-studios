@@ -62,28 +62,7 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Hero Section */}
-      <section className={styles.hero}>
-        <div className={styles.heroBg}>
-          <video
-            className={styles.heroVideo}
-            autoPlay
-            muted
-            loop
-            playsInline
-            src={projects[0]?.video_url || "https://player.vimeo.com/external/3719003.hd.mp4?s=ba66c98eeeaac2cc48ddfd88cfdacededcae44ce&profile_id=174&oauth2_token_id=57447761"}
-          />
-          <div className={styles.heroOverlay}></div>
-        </div>
-        <div className={styles.heroContent}>
-          <span className={styles.heroTagline}>A Cinematic Production Studio</span>
-          <Link href="/inquiry" className={styles.heroCta}>
-            Start a Project
-          </Link>
-        </div>
-      </section>
-
-      {/* Video Showcase — Bodeyco-style fullscreen stacked videos */}
+      {/* Showcase Section — Integrated snapping experience */}
       <section className={styles.showcase} ref={sectionRef}>
         {loading ? (
           <div className={styles.loadingState}>
@@ -95,12 +74,13 @@ export default function HomePage() {
           <>
             {/* Fullscreen video items */}
             <div className={styles.videoList}>
-              {projects.slice(1).map((project, i) => (
+              {projects.map((project, i) => (
                 <Link
                   href={`/work/${project.slug}`}
                   key={project.id}
                   className={`${styles.videoItem} ${project.is_vertical ? styles.isVertical : ''}`}
                   data-item={project.title}
+                  style={{ '--video-align': project.video_alignment || 'top center' }}
                 >
                   <div className={styles.videoEmbed}>
                     {project.video_url ? (
@@ -110,9 +90,11 @@ export default function HomePage() {
                         muted
                         loop
                         playsInline
+                        autoPlay={i === 0}
                         preload="metadata"
                         src={project.video_url}
                         className={styles.video}
+                        style={{ objectPosition: project.video_alignment || 'top center' }}
                       />
                     ) : project.thumbnail_url ? (
                       <img
@@ -136,8 +118,6 @@ export default function HomePage() {
                 </Link>
               ))}
             </div>
-
-
           </>
         ) : (
           <div className={styles.emptyHero}>
