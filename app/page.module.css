@@ -43,42 +43,34 @@
   opacity: 0.5;
 }
 
-/* -------------------------------------------
-   Dual-Rendering Architecture Base
-   ------------------------------------------- */
-.desktopBgLayer {
-  display: none; /* Hidden on mobile */
-}
-
-/* Base Mobile Layout (Reactive List) */
+/* Base Layout (Applies to both Mobile and Desktop) */
 .homeContainer {
   width: 100%;
   background: #000;
-  height: 100vh; /* Fixed height to allow inner scroll */
+  height: 100vh;
   padding-top: var(--nav-height); 
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow: hidden; /* Prevent page-level scroll, force scroll inside listWrapper */
+  overflow: hidden; 
 }
 
 .desktopSoundToggle {
   display: none; 
 }
 
-/* On mobile side, these span 100% width stacked */
-.listWrapper {
+/* Feed Wrapper: The 100vh scrolling container */
+.feedWrapper {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%; /* Fill remaining viewport under nav */
+  height: 100%;
   overflow-y: scroll;
-  scroll-snap-type: y mandatory; /* TikTok/Reels snap */
-  scrollbar-width: none; /* Hide scrollbar */
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none; 
   -ms-overflow-style: none;
 }
-
-.listWrapper::-webkit-scrollbar {
+.feedWrapper::-webkit-scrollbar {
   display: none;
 }
 
@@ -93,27 +85,22 @@
   position: relative;
 }
 
-.mobileVideoWrapper {
+.videoWrapper {
   width: 100%;
-  height: 100%; /* Fill the block */
+  height: 100%;
   position: relative;
   background: #111;
   overflow: hidden;
 }
 
-.videoField {
+.videoField, .placeholderBg {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.placeholderBg {
-  width: 100%;
-  height: 100%;
-  background: #333;
-}
-
+/* Mobile Overlays */
 .mobileSoundToggle {
   position: absolute;
   top: 16px; 
@@ -131,30 +118,20 @@
   transition: color var(--transition-fast);
   text-shadow: 0 1px 3px rgba(0,0,0,0.5);
 }
+.mobileSoundToggle:hover { color: #fff; }
 
-.mobileSoundToggle:hover {
-  background: transparent;
-  color: #fff;
-}
-
-/* Base Project Info (Mobile overlaid on video) */
-.projectInfo {
+.mobileProjectInfo {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   padding: 40px var(--container-padding) 24px var(--container-padding);
-  background: transparent; /* Gradient removed as requested */
+  background: transparent;
   display: flex;
   flex-direction: column;
   gap: 4px;
   color: #fff;
-  text-decoration: none;
   z-index: 5;
-}
-
-.progressBar {
-  display: none; 
 }
 
 .infoContent {
@@ -169,9 +146,8 @@
   gap: 8px;
   font-size: 1.25rem;
   font-weight: 500;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.8); /* Keep text shadow for readability since gradient is gone */
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
 }
-
 .client {
   font-size: 0.8rem;
   font-weight: 400;
@@ -179,12 +155,7 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
-
-.separator {
-  opacity: 0.5;
-  font-weight: 300;
-}
-
+.separator { opacity: 0.5; font-weight: 300; }
 .category {
   font-size: 0.75rem;
   opacity: 0.6;
@@ -193,6 +164,10 @@
   text-shadow: 0 1px 3px rgba(0,0,0,0.8);
 }
 
+/* Hidden by default on mobile */
+.desktopSidebar {
+  display: none;
+}
 
 /* -------------------------------------------
    Desktop Interactive List Layout
@@ -203,18 +178,29 @@
     height: 100vh;
     padding: 0;
     margin: 0;
-    overflow: hidden; /* Prevent native window scroll */
-    position: relative;
-    background: #000;
+    overflow: hidden;
+  }
+
+  /* feedWrapper takes over height since nav is overlaid */
+  .feedWrapper {
+    height: 100vh;
+  }
+
+  .mobileProjectInfo {
+    display: none; /* Hide mobile text block on desktop */
+  }
+
+  .mobileSoundToggle {
+    display: none;
   }
 
   .desktopSoundToggle {
     display: block;
-    position: fixed; /* Fixed to viewport so it never scrolls */
+    position: fixed;
     top: calc(var(--nav-height) + 24px);
     right: 32px;
     padding: 8px 16px;
-    background: transparent; /* Ensure no gradient/shape on desktop either */
+    background: transparent;
     color: rgba(255, 255, 255, 0.5);
     font-size: 0.75rem;
     font-weight: 700;
@@ -222,115 +208,63 @@
     letter-spacing: 0.1em;
     border: none;
     cursor: pointer;
-    z-index: 100; /* Highest priority */
+    z-index: 100;
     transition: all var(--transition-fast);
   }
-  
   .desktopSoundToggle:hover {
     color: #fff;
     transform: translateY(-2px);
   }
 
-  .mobileSoundToggle {
-    display: none;
-  }
-
-  /* Dual Render: Show Desktop Background layer */
-  .desktopBgLayer {
-    display: block;
+  /* Desktop Sidebar Text List */
+  .desktopSidebar {
+    display: flex;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 0;
-    pointer-events: none;
-  }
-
-  .desktopBgWrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 0.6s ease;
-  }
-
-  .desktopBgWrapper.activeBg {
-    opacity: 1;
-    z-index: 1;
-  }
-
-  .bgVideoField {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  /* Dual Render: Hide Mobile Video layer */
-  .mobileVideoWrapper {
-    display: none;
-  }
-
-  /* Scrollable CSS-Grid or Flex List Overlay (Z-Index 10) */
-  .listWrapper {
-    position: fixed; /* Fixed relative to viewport */
     bottom: 32px;
     left: 32px;
     width: 25vw;
     max-width: 400px;
     min-width: 300px;
     max-height: calc(100vh - var(--nav-height) - 100px); 
-    display: flex;
     flex-direction: column;
     overflow-y: auto; 
-    z-index: 10;
+    z-index: 50;
     pointer-events: auto;
     
-    /* Scrollbar styling for desktop so user KNOWS it scrolls */
     scrollbar-width: thin;
     scrollbar-color: rgba(255,255,255,0.2) transparent;
   }
-  
-  .listWrapper::-webkit-scrollbar {
-    width: 4px;
-  }
-  .listWrapper::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  .listWrapper::-webkit-scrollbar-thumb {
-    background-color: rgba(255,255,255,0.2);
-    border-radius: 20px;
-  }
+  .desktopSidebar::-webkit-scrollbar { width: 4px; }
+  .desktopSidebar::-webkit-scrollbar-track { background: transparent; }
+  .desktopSidebar::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.2); border-radius: 20px; }
 
-  .projectBlock {
-    /* We don't need projectBlock to hold shape on desktop anymore */
-    display: contents; 
-  }
-
-  /* Project Info Minimal Rows */
-  .projectInfo {
+  /* Desktop Text Items - "Much much smaller and a bit more opache" */
+  .sidebarItem {
     position: relative; 
     width: 100%;
-    padding: 14px 16px; 
-    background: transparent; /* Removed glassmorphism gradient entirely */
+    padding: 10px 12px; 
+    background: transparent; 
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     transition: all var(--transition-fast);
     z-index: 15; 
+    text-decoration: none;
+    color: #fff;
+  }
+
+  .sidebarItem:last-child {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15); 
   }
 
   .progressBar {
     display: block;
     position: absolute;
-    top: -1px; /* Overlap top border */
+    top: -1px;
     left: 0;
     width: 100%;
-    height: 2px;
+    height: 1px; /* Thinner progress bar */
     background: transparent;
     z-index: 15;
   }
-
   .progressFill {
     height: 100%;
     width: 100%;
@@ -338,59 +272,47 @@
     transform-origin: left center;
   }
 
-  .projectBlock:last-child .projectInfo {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15); 
-  }
-
-  /* Ultra-minimal single line flex layout */
-  .infoContent {
+  .sidebarContent {
+    display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    opacity: 0.5; /* Inactive opacity by default */
+    opacity: 0.3; /* Opaque / transparent for inactive */
     transition: opacity var(--transition-fast);
   }
 
-  .titleInfo {
-    font-size: 0.85rem;
+  .sidebarTitle {
+    font-size: 0.70rem; /* Much smaller text */
     font-weight: 500;
     text-shadow: none;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
 
-  .client {
-    font-size: 0.75rem;
+  .sidebarClient {
+    font-size: 0.65rem;
   }
 
-  .category {
-    font-size: 0.65rem;
+  .sidebarCategory {
+    font-size: 0.60rem;
     text-shadow: none;
     text-align: right;
   }
 
-  /* Hover & Active States for list rows */
-  .activeBlock .projectInfo {
-    background: transparent; 
-  }
-
-  .activeBlock .infoContent {
-    opacity: 1; /* Brighten active text */
-  }
-
-  /* Make active title bolder to stand out more */
-  .activeBlock .titleInfo {
-    font-weight: 700; 
-  }
-
-  .projectInfo:hover {
-    background: transparent;
-    cursor: pointer;
+  /* Active & Hover States */
+  .activeSidebarItem .sidebarContent {
+    opacity: 1; /* Bright active text */
   }
   
-  /* Brighten inactive items slightly on hover */
-  .projectInfo:hover .infoContent {
+  .activeSidebarItem .sidebarTitle {
+    font-weight: 700;
+  }
+
+  .sidebarItem:hover {
+    cursor: pointer;
+  }
+  .sidebarItem:hover .sidebarContent {
     opacity: 0.8; 
   }
 }
