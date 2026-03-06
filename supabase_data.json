@@ -1,0 +1,118 @@
+{
+  "projects": [
+    {
+      "title": "The Autumn Path",
+      "client": "",
+      "slug": "the-autumn-path",
+      "category": "Cinematic",
+      "description": "",
+      "services": "",
+      "thumbnailUrl": "https://bxohhbtwiokkdjknwrim.supabase.co/storage/v1/object/public/images/Screenshot%20(31).png",
+      "videoUrl": "https://bxohhbtwiokkdjknwrim.supabase.co/storage/v1/object/public/Videos/a.mp4",
+      "featured": true,
+      "sortOrder": 4,
+      "isVertical": false,
+      "videoAlignment": "center center"
+    },
+    {
+      "title": "The Story - I",
+      "client": "Pashmetush",
+      "slug": "the-story-i",
+      "category": "Cinematic",
+      "description": "",
+      "services": "",
+      "thumbnailUrl": "https://bxohhbtwiokkdjknwrim.supabase.co/storage/v1/object/public/images/Screenshot%20(33).png",
+      "videoUrl": "https://bxohhbtwiokkdjknwrim.supabase.co/storage/v1/object/public/Videos/Img%207460.mp4",
+      "featured": true,
+      "sortOrder": 2,
+      "isVertical": false,
+      "videoAlignment": "top center"
+    },
+    {
+      "title": "Martial Arts Training",
+      "client": "Rockwell School",
+      "slug": "rockwell-school",
+      "category": "Commercial",
+      "description": "",
+      "services": "",
+      "thumbnailUrl": "https://bxohhbtwiokkdjknwrim.supabase.co/storage/v1/object/public/images/Screenshot%20(32).png",
+      "videoUrl": "https://bxohhbtwiokkdjknwrim.supabase.co/storage/v1/object/public/Videos/Vn20260119%20152217(1).mp4",
+      "featured": true,
+      "sortOrder": 3,
+      "isVertical": false,
+      "videoAlignment": "bottom center"
+    },
+    {
+      "title": "Gulmarg",
+      "client": "",
+      "slug": "test",
+      "category": "Cinematic",
+      "description": "",
+      "services": "",
+      "thumbnailUrl": "https://bxohhbtwiokkdjknwrim.supabase.co/storage/v1/object/public/images/Screenshot%20(34).png",
+      "videoUrl": "https://bxohhbtwiokkdjknwrim.supabase.co/storage/v1/object/public/Videos/lv_0_20250808164223.mp4",
+      "featured": true,
+      "sortOrder": 1,
+      "isVertical": false,
+      "videoAlignment": "top center"
+    },
+    {
+      "title": "slow",
+      "client": "",
+      "slug": "new",
+      "category": "Cinematic",
+      "description": "",
+      "services": "",
+      "thumbnailUrl": "https://bxohhbtwiokkdjknwrim.supabase.co/storage/v1/object/public/images/Screenshot%20(30).png",
+      "videoUrl": "https://bxohhbtwiokkdjknwrim.supabase.co/storage/v1/object/public/Videos/lv_0_20250725113534.mp4",
+      "featured": true,
+      "sortOrder": 2,
+      "isVertical": false,
+      "videoAlignment": "center center"
+    }
+  ],
+  "careers": [
+    {
+      "title": "Photographer",
+      "slug": "url-photo-one",
+      "type": "Freelance / Contract / Full Time",
+      "description": "",
+      "active": true
+    }
+  ],
+  "inquiries": [
+    {
+      "name": "Mubashir Hamdani",
+      "email": "dingier.pave_16@icloud.com",
+      "phone": "7587353616",
+      "services": ["Other"],
+      "company": "NULL",
+      "role": "NULL",
+      "industry": "NULL",
+      "projectDescription": ".",
+      "budget": "$100k+",
+      "timeline": "ASAP",
+      "status": "new"
+    },
+    {
+      "name": "Kamran Tramboo",
+      "email": "kamran.tramboo@gmail.com",
+      "phone": "09541704628",
+      "services": ["Cinematic Video","Photography","Color Grading"],
+      "company": "googga",
+      "role": "foune",
+      "industry": "music",
+      "projectDescription": "this is proja aahbhabdjhabfba ballley balley",
+      "budget": "Under $5k",
+      "timeline": "flexible",
+      "status": "new"
+    }
+  ],
+  "studioInfo": {
+    "intro": "Hubaab Studios is a premier cinematic video production and photography agency operating between the breathtaking landscapes of Srinagar and the bustling urban pulse of New Delhi. Founded with an uncompromising vision to blend raw emotive storytelling with high-end commercial aesthetics, the studio has built a reputation for crafting visually arresting narratives. Whether directing fashion films, producing large-scale commercials, or capturing fleeting documentary moments, our team brings a relentless dedication to lighting, composition, and authentic human connection to every single frame. We believe that truly memorable visuals don’t just look beautiful—they make you feel something profoundly real.",
+    "services": [],
+    "clients": [],
+    "industry": [],
+    "press": []
+  }
+}

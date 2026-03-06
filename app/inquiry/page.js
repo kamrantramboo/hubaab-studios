@@ -1,20 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { supabase } from '@/lib/supabase';
-import styles from './page.module.css';
-
-const serviceOptions = [
-  'Cinematic Video',
-  'Photography',
-  'Commercial',
-  'Music Video',
-  'Fashion Film',
-  'Documentary',
-  'Post-Production',
-  'Color Grading',
-  'Other',
-];
+import { sanityClient } from '@/lib/sanity';
 
 export default function InquiryPage() {
   const [step, setStep] = useState(1);
@@ -28,7 +15,7 @@ export default function InquiryPage() {
     company: '',
     role: '',
     industry: '',
-    project_description: '',
+    projectDescription: '',
     budget: '',
     timeline: '',
   });
@@ -77,7 +64,7 @@ export default function InquiryPage() {
       case 1: return form.name && form.email;
       case 2: return form.services.length > 0;
       case 3: return true;
-      case 4: return form.project_description;
+      case 4: return form.projectDescription;
       default: return false;
     }
   };
@@ -87,11 +74,13 @@ export default function InquiryPage() {
     setSubmitting(true);
 
     try {
-      const { error } = await supabase
-        .from('inquiries')
-        .insert([form]);
+      const doc = {
+        _type: 'inquiry',
+        ...form,
+        createdAt: new Date().toISOString(),
+      };
 
-      if (error) throw error;
+      await sanityClient.create(doc);
       setSubmitted(true);
     } catch (err) {
       console.error('Submission error:', err);
@@ -246,8 +235,8 @@ export default function InquiryPage() {
                 <textarea
                   className="form-input form-textarea"
                   placeholder="Tell us about your project, vision, and creative goals..."
-                  value={form.project_description}
-                  onChange={(e) => updateField('project_description', e.target.value)}
+                  value={form.projectDescription}
+                  onChange={(e) => updateField('projectDescription', e.target.value)}
                 />
               </div>
               <div className="form-group">

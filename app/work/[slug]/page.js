@@ -3,8 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { supabase } from '@/lib/supabase';
-import styles from './page.module.css';
+import { sanityFetch } from '@/lib/sanity';
 
 export default function ProjectDetailPage() {
   const params = useParams();
@@ -15,16 +14,24 @@ export default function ProjectDetailPage() {
   useEffect(() => {
     async function fetchProject() {
       try {
-        const { data, error } = await supabase
-          .from('projects')
-          .select('*')
-          .eq('slug', params.slug)
-          .single();
-
-        if (error) throw error;
+        const query = `*[_type == "project" && slug.current == $slug][0] {
+          _id,
+          title,
+          client,
+          slug,
+          category,
+          description,
+          services,
+          "thumbnail_url": thumbnail.asset->url,
+          "video_url": videoUrl,
+          "media_urls": media[].asset->url,
+          sortOrder
+        }`;
+        
+        const data = await sanityFetch({ query, params: { slug: params.slug } });
         setProject(data);
       } catch (err) {
-        console.log('Project not found or Supabase not connected');
+        console.log('Project not found or Sanity not connected');
       } finally {
         setLoading(false);
       }

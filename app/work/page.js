@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { supabase } from '@/lib/supabase';
-import styles from './page.module.css';
+import { sanityFetch } from '@/lib/sanity';
 
 const categories = ['All', 'Cinematic', 'Commercial', 'Music', 'Fashion', 'Editorial', 'Film'];
 
@@ -16,15 +15,22 @@ export default function WorkPage() {
   useEffect(() => {
     async function fetchProjects() {
       try {
-        const { data, error } = await supabase
-          .from('projects')
-          .select('*')
-          .order('sort_order', { ascending: true });
-
-        if (error) throw error;
+        const query = `*[_type == "project"] | order(sortOrder asc) {
+          _id,
+          title,
+          client,
+          slug,
+          category,
+          "thumbnail_url": thumbnail.asset->url,
+          "video_url": videoUrl,
+          is_vertical,
+          sortOrder
+        }`;
+        
+        const data = await sanityFetch({ query });
         setProjects(data || []);
       } catch (err) {
-        console.log('Supabase not connected yet');
+        console.log('Sanity not connected yet');
         setProjects([]);
       } finally {
         setLoading(false);
@@ -88,8 +94,8 @@ export default function WorkPage() {
             <div className={styles.grid}>
               {filtered.map((project) => (
                 <Link
-                  key={project.id}
-                  href={`/work/${project.slug}`}
+                  key={project._id}
+                  href={`/work/${project.slug?.current || project.slug}`}
                   className={`${styles.projectCard} ${project.is_vertical ? styles.isVertical : ''}`}
                 >
                   <div 
@@ -139,8 +145,8 @@ export default function WorkPage() {
             <div className={styles.listView}>
               {filtered.map((project) => (
                 <Link
-                  key={project.id}
-                  href={`/work/${project.slug}`}
+                  key={project._id}
+                  href={`/work/${project.slug?.current || project.slug}`}
                   className={styles.listRow}
                 >
                   <div 

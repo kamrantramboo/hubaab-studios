@@ -1,8 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
-import styles from './page.module.css';
+import { sanityFetch } from '@/lib/sanity';
 
 export default function AboutPage() {
   const [info, setInfo] = useState(null);
@@ -11,22 +10,11 @@ export default function AboutPage() {
   useEffect(() => {
     async function fetchInfo() {
       try {
-        const { data, error } = await supabase
-          .from('studio_info')
-          .select('*')
-          .eq('id', 1)
-          .single();
-
-        if (!error && data) {
-          // Parse JSON if they come as strings (depends on how Supabase returns JSONB in some clients)
-          const parseJSON = (val) => typeof val === 'string' ? JSON.parse(val) : val;
-          setInfo({
-            ...data,
-            services: parseJSON(data.services) || [],
-            clients: parseJSON(data.clients) || [],
-            industry: parseJSON(data.industry) || [],
-            press: parseJSON(data.press) || [],
-          });
+        const query = `*[_type == "studioInfo"][0]`;
+        const data = await sanityFetch({ query });
+        
+        if (data) {
+          setInfo(data);
         }
       } catch (err) {
         console.error('Error fetching studio info:', err);

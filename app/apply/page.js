@@ -2,8 +2,7 @@
 
 import { useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
-import styles from './page.module.css';
+import { sanityClient } from '@/lib/sanity';
 
 function ApplyForm() {
   const searchParams = useSearchParams();
@@ -13,11 +12,11 @@ function ApplyForm() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({
-    role_title: roleFromUrl,
+    roleTitle: roleFromUrl,
     name: '',
     email: '',
-    portfolio_url: '',
-    resume_url: '',
+    portfolioUrl: '',
+    resumeUrl: '',
     message: ''
   });
 
@@ -26,11 +25,13 @@ function ApplyForm() {
     setSubmitting(true);
 
     try {
-      const { error } = await supabase
-        .from('applications')
-        .insert([form]);
+      const doc = {
+        _type: 'application',
+        ...form,
+        createdAt: new Date().toISOString(),
+      };
 
-      if (error) throw error;
+      await sanityClient.create(doc);
       setSubmitted(true);
       
       // Redirect back to careers after 3 seconds
@@ -92,8 +93,8 @@ function ApplyForm() {
             type="url" 
             className="form-input" 
             placeholder="https://"
-            value={form.portfolio_url}
-            onChange={(e) => setForm({...form, portfolio_url: e.target.value})}
+            value={form.portfolioUrl}
+            onChange={(e) => setForm({...form, portfolioUrl: e.target.value})}
           />
         </div>
 
@@ -103,8 +104,8 @@ function ApplyForm() {
             type="url" 
             className="form-input" 
             placeholder="https://"
-            value={form.resume_url}
-            onChange={(e) => setForm({...form, resume_url: e.target.value})}
+            value={form.resumeUrl}
+            onChange={(e) => setForm({...form, resumeUrl: e.target.value})}
           />
         </div>
 

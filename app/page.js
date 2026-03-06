@@ -2,8 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
-import { supabase } from '@/lib/supabase';
-import styles from './page.module.css';
+import { sanityFetch } from '@/lib/sanity';
 
 export default function HomePage() {
   const [projects, setProjects] = useState([]);
@@ -18,16 +17,22 @@ export default function HomePage() {
   useEffect(() => {
     async function fetchFeatured() {
       try {
-        const { data, error } = await supabase
-          .from('projects')
-          .select('*')
-          .eq('featured', true)
-          .order('sort_order', { ascending: true });
-
-        if (error) throw error;
+        const query = `*[_type == "project" && featured == true] | order(sortOrder asc) {
+          _id,
+          title,
+          client,
+          slug,
+          category,
+          "thumbnail_url": thumbnail.asset->url,
+          "video_url": videoUrl,
+          video_alignment,
+          sortOrder
+        }`;
+        
+        const data = await sanityFetch({ query });
         setProjects(data || []);
       } catch (err) {
-        console.log('Supabase not connected yet — showing empty state');
+        console.log('Sanity not connected yet — showing empty state');
         setProjects([]);
       } finally {
         setLoading(false);
@@ -119,7 +124,7 @@ export default function HomePage() {
           const isActive = activeIndex === i;
           return (
             <div 
-              key={`section-${project.id}`} 
+              key={`section-${project._id}`} 
               className={styles.projectBlock}
               ref={(el) => (sectionRefs.current[i] = el)}
               data-index={i}
@@ -162,8 +167,8 @@ export default function HomePage() {
           const isActive = activeIndex === i;
           return (
             <Link 
-              key={`link-${project.id}`} 
-              href={`/work/${project.slug}`}
+              key={`link-${project._id}`} 
+              href={`/work/${project.slug?.current || project.slug}`}
               className={`${styles.listItem} ${isActive ? styles.activeListItem : ''}`}
               ref={(el) => (projectItemRefs.current[i] = el)}
             >

@@ -1,11 +1,6 @@
-export const metadata = {
-  title: 'Admin — hubaab studio',
-  robots: 'noindex, nofollow',
-};
-
 export default function AdminLayout({ children }) {
   return (
-    <div style={{ minHeight: '100vh' }}>
+    <div className="admin-layout" style={{ height: '100vh', width: '100vw' }}>
       {children}
     </div>
   );

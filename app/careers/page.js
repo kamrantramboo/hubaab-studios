@@ -1,9 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
-import Link from 'next/link';
-import styles from './page.module.css';
+import { sanityFetch } from '@/lib/sanity';
 
 export default function CareersPage() {
   const [roles, setRoles] = useState([]);
@@ -12,16 +10,11 @@ export default function CareersPage() {
   useEffect(() => {
     async function fetchCareers() {
       try {
-        const { data, error } = await supabase
-          .from('careers')
-          .select('*')
-          .eq('active', true)
-          .order('created_at', { ascending: false });
-
-        if (error) throw error;
+        const query = `*[_type == "career" && active == true] | order(_createdAt desc)`;
+        const data = await sanityFetch({ query });
         setRoles(data || []);
       } catch (err) {
-        console.log('Supabase not connected yet');
+        console.log('Sanity not connected yet');
         setRoles([]);
       } finally {
         setLoading(false);
@@ -49,7 +42,7 @@ export default function CareersPage() {
           ) : roles.length > 0 ? (
             <div className={styles.rolesList}>
               {roles.map((role) => (
-                <div key={role.id} className="career-card">
+                <div key={role._id} className="career-card">
                   <h3 className="career-title">{role.title}</h3>
                   <span className="career-type">{role.type}</span>
                   {role.description && (
