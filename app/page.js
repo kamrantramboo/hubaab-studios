@@ -9,7 +9,8 @@ export default function HomePage() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [unmutedId, setUnmutedId] = useState(null);
+  const [isUnmuted, setIsUnmuted] = useState(false);
+  const [isHeroActive, setIsHeroActive] = useState(true);
   const videoRefs = useRef([]);
   const sectionRef = useRef(null);
   const heroRef = useRef(null);
@@ -69,7 +70,9 @@ export default function HomePage() {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        document.body.dataset.heroVisible = entry.isIntersecting ? 'true' : 'false';
+        const visible = entry.isIntersecting;
+        document.body.dataset.heroVisible = visible ? 'true' : 'false';
+        setIsHeroActive(visible);
       },
       { threshold: 0.5 }
     );
@@ -81,10 +84,10 @@ export default function HomePage() {
     };
   }, []);
 
-  const toggleMute = (e, id) => {
+  const toggleGlobalMute = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setUnmutedId(unmutedId === id ? null : id);
+    setIsUnmuted(!isUnmuted);
   };
 
   return (
@@ -99,17 +102,17 @@ export default function HomePage() {
                 <video
                   className={styles.heroVideo}
                   autoPlay
-                  muted={unmutedId !== 'hero'}
+                  muted={!isUnmuted || !isHeroActive}
                   loop
                   playsInline
                   src={projects[0].video_url}
                 />
                 <button 
                   className={styles.miniSoundToggle}
-                  onClick={(e) => toggleMute(e, 'hero')}
+                  onClick={toggleGlobalMute}
                   style={{ bottom: '40px', right: 'var(--container-padding)', opacity: 1, transform: 'none' }}
                 >
-                  {unmutedId === 'hero' ? (
+                  {isUnmuted ? (
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M11 5L6 9H2v6h4l5 4V5z"/></svg>
                   ) : (
                     <div className={styles.mutedIconWrapper}>
@@ -150,7 +153,7 @@ export default function HomePage() {
                     <video
                       ref={(el) => (videoRefs.current[i] = el)}
                       data-index={i}
-                      muted={unmutedId !== project.id}
+                      muted={!isUnmuted || activeIndex !== i || isHeroActive}
                       loop
                       playsInline
                       autoPlay={i === 0}
@@ -161,9 +164,9 @@ export default function HomePage() {
                     />
                     <button 
                       className={styles.miniSoundToggle}
-                      onClick={(e) => toggleMute(e, project.id)}
+                      onClick={toggleGlobalMute}
                     >
-                      {unmutedId === project.id ? (
+                      {isUnmuted ? (
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M11 5L6 9H2v6h4l5 4V5z"/></svg>
                       ) : (
                         <div className={styles.mutedIconWrapper}>
