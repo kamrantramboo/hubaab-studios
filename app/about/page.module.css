@@ -136,9 +136,88 @@
   }
 }
 
-@media (max-width: 768px) {
   .infoGrid {
     grid-template-columns: 1fr;
     gap: 40px;
+  }
+}
+
+/* Contact & Maps Section */
+.contactGrid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 60px;
+  margin-top: 20px;
+}
+
+.contactBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.contactItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contactLabel {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.contactLink {
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: opacity var(--transition-fast);
+}
+
+.contactLink:hover {
+  opacity: 0.7;
+}
+
+.mapsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.mapItem {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mapCity {
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+
+.mapEmbed {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  background: var(--bg-secondary);
+  filter: grayscale(100%) invert(92%) contrast(83%);
+}
+
+@media (max-width: 1024px) {
+  .contactGrid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mapsGrid {
+    grid-template-columns: 1fr;
   }
 }

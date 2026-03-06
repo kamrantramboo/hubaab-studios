@@ -294,7 +294,16 @@ function getColumns(tab) {
             {v || 'new'}
           </span>
         )},
-        { key: 'project_description', label: 'Message', render: (v) => v ? (v.length > 50 ? v.substring(0, 50) + '...' : v) : '—' },
+        { key: 'project_description', label: 'Message', render: (v) => v ? (
+          v.length > 50 ? (
+            <details style={{ cursor: 'pointer', maxWidth: '300px' }}>
+              <summary style={{ outline: 'none', color: 'var(--text-primary)' }}>{v.substring(0, 50)}...</summary>
+              <div style={{ marginTop: '8px', padding: '8px', background: 'rgba(255,255,255,0.05)', borderRadius: '4px', whiteSpace: 'pre-wrap', color: 'var(--text-secondary)' }}>
+                {v}
+              </div>
+            </details>
+          ) : v
+        ) : '—' },
       ];
     case 'Studio Info':
       return [

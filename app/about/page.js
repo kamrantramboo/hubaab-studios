@@ -117,6 +117,47 @@ export default function AboutPage() {
             </div>
           </section>
         )}
+
+        {/* Contact & Locations Section */}
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Contact & Locations</h2>
+          <div className={styles.contactGrid}>
+            <div className={styles.contactBlock}>
+               <div className={styles.contactItem}>
+                 <span className={styles.contactLabel}>For Inquiries</span>
+                 <a href="mailto:info@hubaabstudios.com" className={styles.contactLink}>info@hubaabstudios.com</a>
+                 <a href="tel:+919876543210" className={styles.contactLink}>+91 98765 43210</a>
+               </div>
+               <div className={styles.contactItem}>
+                 <span className={styles.contactLabel}>For Opportunities</span>
+                 <a href="mailto:careers@hubaabstudios.com" className={styles.contactLink}>careers@hubaabstudios.com</a>
+               </div>
+            </div>
+
+            <div className={styles.mapsGrid}>
+              <div className={styles.mapItem}>
+                <span className={styles.mapCity}>Srinagar Location</span>
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1m2!1s0x38e18f2dbbd9eb05%3A0xe2ce6a8bc6ccce!2sSrinagar%2C%20Jammu%20and%20Kashmir!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin" 
+                  className={styles.mapEmbed}
+                  allowFullScreen="" 
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
+              </div>
+              <div className={styles.mapItem}>
+                <span className={styles.mapCity}>Delhi Location</span>
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1m2!1s0x390cfd5b347eb62d%3A0x37205b715389640!2sNew%20Delhi%2C%20Delhi!5e0!3m2!1sen!2sin!4v1700000000001!5m2!1sen!2sin" 
+                  className={styles.mapEmbed}
+                  allowFullScreen="" 
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade"
+                ></iframe>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   );

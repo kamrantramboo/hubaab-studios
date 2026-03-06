@@ -8,6 +8,7 @@ import styles from './Footer.module.css';
 export default function Footer() {
   const pathname = usePathname();
   const [currentTime, setCurrentTime] = useState({});
+  const [subscribed, setSubscribed] = useState(false);
 
   useEffect(() => {
     const updateTimes = () => {
@@ -79,14 +80,14 @@ export default function Footer() {
           <div className={styles.column}>
             <h4 className={styles.colTitle}>Location</h4>
             <div className={styles.locations}>
-              <div className={styles.location}>
+              <Link href="/about" className={styles.location}>
                 <span className={styles.city}>Srinagar</span>
                 <span className={styles.time}>{currentTime.ist || '--:--:--'} IST</span>
-              </div>
-              <div className={styles.location}>
+              </Link>
+              <Link href="/about" className={styles.location}>
                 <span className={styles.city}>Delhi</span>
                 <span className={styles.time}>{currentTime.delhi || '--:--:--'} IST</span>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
@@ -96,10 +97,22 @@ export default function Footer() {
           <p className={styles.newsletterText}>
             Sign up to receive occasional updates from hubaab studio, including recent projects, studio work, and behind-the-scenes content.
           </p>
-          <form className={styles.newsletterForm} onSubmit={(e) => e.preventDefault()}>
-            <input type="email" placeholder="Email Address" className={styles.newsletterInput} />
-            <button type="submit" className={styles.newsletterSubmit}>Join</button>
-          </form>
+          {subscribed ? (
+            <div style={{ color: 'var(--text-primary)', fontSize: '0.85rem', fontWeight: '500', marginTop: '16px' }}>
+              ✓ Thank you for subscribing.
+            </div>
+          ) : (
+            <form 
+              className={styles.newsletterForm} 
+              onSubmit={(e) => {
+                e.preventDefault();
+                setSubscribed(true);
+              }}
+            >
+              <input type="email" placeholder="Email Address" required className={styles.newsletterInput} />
+              <button type="submit" className={styles.newsletterSubmit}>Join</button>
+            </form>
+          )}
         </div>
 
         {/* Bottom */}
