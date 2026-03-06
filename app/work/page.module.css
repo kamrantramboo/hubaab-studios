@@ -223,44 +223,53 @@
     display: none;
   }
 }
-/* Sound Toggle (copied from home for consistency) */
-.soundToggle {
-  position: fixed;
-  bottom: 40px;
-  right: var(--container-padding);
-  z-index: 100;
+/* Speaker Icon for Grid/List entries */
+.miniSoundToggle {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(10px);
-  padding: 10px 16px;
-  border-radius: 40px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  border-radius: 50%;
   color: #fff;
-  font-size: 0.65rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  cursor: pointer;
+  opacity: 0;
+  transform: translateY(10px);
   transition: all var(--transition-fast);
+  z-index: 5;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.soundToggle:hover {
+.thumbnailWrapper:hover .miniSoundToggle,
+.listThumb:hover .miniSoundToggle {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.miniSoundToggle:hover {
   background: rgba(255, 255, 255, 1);
   color: #000;
-  transform: translateY(-2px);
+  transform: scale(1.1);
 }
 
-.soundToggle svg {
-  stroke-linecap: round;
-  stroke-linejoin: round;
+.mutedIconWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @media (max-width: 768px) {
-  .soundToggle {
-    bottom: 24px;
-    padding: 8px 14px;
-    font-size: 0.6rem;
+  .miniSoundToggle {
+    opacity: 1;
+    transform: none;
+    width: 24px;
+    height: 24px;
+    bottom: 8px;
+    right: 8px;
   }
 }
