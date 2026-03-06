@@ -76,12 +76,37 @@ export default function AdminDashboard() {
       formData.slug = formData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
     }
 
+    const isStudioInfo = table === 'studio_info';
+    let dataToSave = { ...formData };
+
+    // Handle Studio Info specific payload parsing (convert formatted strings back to objects where needed)
+    if (isStudioInfo) {
+      const parseJsonArray = (str) => {
+        try {
+          // If it's already an array, leave it
+          if (Array.isArray(str)) return str;
+          // If it's empty, return empty array
+          if (!str || str.trim() === '') return [];
+          // Try parsing
+          return JSON.parse(str);
+        } catch {
+          // Fallback: Split by newline if JSON parse fails
+          return str.split('\n').map(s => s.trim()).filter(Boolean);
+        }
+      };
+      
+      dataToSave.services = typeof dataToSave.services === 'string' ? parseJsonArray(dataToSave.services) : dataToSave.services;
+      dataToSave.clients = typeof dataToSave.clients === 'string' ? parseJsonArray(dataToSave.clients) : dataToSave.clients;
+      dataToSave.industry = typeof dataToSave.industry === 'string' ? parseJsonArray(dataToSave.industry) : dataToSave.industry;
+      dataToSave.press = typeof dataToSave.press === 'string' ? parseJsonArray(dataToSave.press) : dataToSave.press;
+    }
+
     let error;
     if (editingItem) {
-      const { error: updateError } = await supabase.from(table).update(formData).eq('id', editingItem.id);
+      const { error: updateError } = await supabase.from(table).update(dataToSave).eq('id', editingItem.id);
       error = updateError;
     } else {
-      const { error: insertError } = await supabase.from(table).insert([formData]);
+      const { error: insertError } = await supabase.from(table).insert([dataToSave]);
       error = insertError;
     }
     
@@ -253,15 +278,18 @@ function getColumns(tab) {
         { key: 'name', label: 'Name' },
         { key: 'email', label: 'Email' },
         { key: 'company', label: 'Company' },
+        { key: 'budget', label: 'Budget' },
         { key: 'status', label: 'Status', render: (v) => (
           <span className={`badge ${v === 'new' ? 'badge-success' : v === 'responded' ? 'badge-warning' : 'badge-error'}`}>
             {v || 'new'}
           </span>
         )},
+        { key: 'project_description', label: 'Message', render: (v) => v ? (v.length > 50 ? v.substring(0, 50) + '...' : v) : '—' },
       ];
     case 'Studio Info':
       return [
-        { key: 'intro', label: 'Intro' },
+        { key: 'intro', label: 'Intro Text', render: (v) => v ? v.substring(0, 80) + '...' : '—' },
+        { key: 'clients', label: 'Clients', render: (v) => Array.isArray(v) ? `${v.length} clients listed` : 'None' },
       ];
     default: return [];
   }
@@ -293,7 +321,8 @@ function AdminForm({ type, item, onSave, onCancel }) {
             {field.type === 'textarea' ? (
               <textarea
                 className="form-input form-textarea"
-                value={form[field.key] || ''}
+                style={{ minHeight: '120px' }}
+                value={form[field.key] !== undefined ? (typeof form[field.key] === 'object' ? JSON.stringify(form[field.key], null, 2) : form[field.key]) : ''}
                 onChange={(e) => update(field.key, e.target.value, field.type)}
                 placeholder={field.placeholder}
               />
@@ -386,11 +415,11 @@ function getFormFields(type) {
       ];
     case 'Studio Info':
       return [
-        { key: 'intro', label: 'Studio Intro', type: 'textarea', placeholder: 'Studio description...' },
-        { key: 'services', label: 'Services (JSON)', type: 'textarea', placeholder: '[{"title": "...", "desc": "..."}]' },
-        { key: 'clients', label: 'Clients (JSON Array)', type: 'textarea', placeholder: '["Client 1", "Client 2"]' },
-        { key: 'industry', label: 'Industry Tags (JSON Array)', type: 'textarea', placeholder: '["Fashion", "Film"]' },
-        { key: 'press', label: 'Press (JSON Array)', type: 'textarea', placeholder: '["Press 1", "Press 2"]' },
+        { key: 'intro', label: 'Studio Intro (Main About Text)', type: 'textarea', placeholder: 'Hubaab Studios is...' },
+        { key: 'services', label: 'Services Array (JSON Format)', type: 'textarea', placeholder: '[\n  "Director",\n  "Cinematographer"\n]' },
+        { key: 'clients', label: 'Clients Array (JSON Format)', type: 'textarea', placeholder: '[\n  "Nike",\n  "Adidas"\n]' },
+        { key: 'industry', label: 'Industry Tags (JSON Format)', type: 'textarea', placeholder: '[\n  "Commercial",\n  "Fashion"\n]' },
+        { key: 'press', label: 'Press & Features (JSON Format)', type: 'textarea', placeholder: '[\n  "Vogue",\n  "GQ"\n]' },
       ];
     default:
       return [];
