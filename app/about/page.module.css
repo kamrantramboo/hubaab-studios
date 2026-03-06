@@ -83,6 +83,28 @@
   color: var(--text-primary);
 }
 
+.clientLogoWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  min-height: 40px;
+}
+
+.clientLogo {
+  max-width: 120px;
+  max-height: 30px;
+  object-fit: contain;
+  filter: grayscale(100%) brightness(200%); /* Make logos white and blend cleanly */
+  opacity: 0.6;
+  transition: opacity var(--transition-fast);
+}
+
+.clientLogoWrapper:hover .clientLogo {
+  opacity: 1;
+}
+
 /* Industry Tags */
 .industryList {
   display: flex;

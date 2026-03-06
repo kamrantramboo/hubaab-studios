@@ -85,9 +85,18 @@ export default function AboutPage() {
             <div className={styles.infoBlock}>
               <h2 className={styles.sectionTitle}>Clients</h2>
               <div className={styles.clientsGrid}>
-                {clients.length > 0 ? clients.map((client, i) => (
-                  <span key={i} className={styles.clientName}>{client}</span>
-                )) : (
+                {clients.length > 0 ? clients.map((client, i) => {
+                  if (client.includes('|')) {
+                    const [name, logoUrl] = client.split('|').map(s => s.trim());
+                    return (
+                      <div key={i} className={styles.clientLogoWrapper} title={name}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={logoUrl} alt={name} className={styles.clientLogo} />
+                      </div>
+                    );
+                  }
+                  return <span key={i} className={styles.clientName}>{client}</span>;
+                }) : (
                   <span className={styles.clientName} style={{ color: 'var(--text-dim)' }}>Client list coming soon</span>
                 )}
               </div>
