@@ -40,7 +40,7 @@ export default function Footer() {
       <div className={styles.inner}>
         {/* Top section: brand */}
         <div className={styles.brand}>
-          <Link href="/" className={styles.brandName}>Hubaab Studios</Link>
+          <Link href="/" className={styles.brandName}>hubaab studio</Link>
         </div>
 
         {/* Main columns */}
@@ -106,7 +106,7 @@ export default function Footer() {
         <div className={styles.newsletter}>
           <h4 className={styles.colTitle}>Keep in Touch</h4>
           <p className={styles.newsletterText}>
-            Sign up to receive occasional updates from Hubaab Studios, including recent projects, studio work, and behind-the-scenes content.
+            Sign up to receive occasional updates from hubaab studio, including recent projects, studio work, and behind-the-scenes content.
           </p>
         </div>
 

@@ -35,7 +35,7 @@ export default function AdminLoginPage() {
   return (
     <div className="login-container">
       <div className="login-box">
-        <h1>Hubaab Studios</h1>
+        <h1>hubaab studio</h1>
         <p>Sign in to the admin dashboard</p>
 
         <form onSubmit={handleLogin}>

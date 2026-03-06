@@ -45,7 +45,7 @@ export default function Navbar() {
       <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ''} ${isLightTheme ? 'light-theme' : ''}`}>
         <div className={styles.inner}>
           <Link href="/" className={styles.logo} onClick={closeMenu}>
-            hubaab studios
+            hubaab studio
           </Link>
 
           {/* Desktop nav — comma-separated like Bodeyco */}

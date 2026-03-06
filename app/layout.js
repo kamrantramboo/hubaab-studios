@@ -4,10 +4,10 @@ import Footer from '@/components/Footer';
 import Loader from '@/components/Loader';
 
 export const metadata = {
-  title: 'Hubaab Studios — A Cinematic Production Studio',
-  description: 'Hubaab Studios is a cinematic production studio specializing in cinematic videos and photography. We create beautiful visual stories through thoughtful collaboration and craft.',
+  title: 'hubaab studio — A Cinematic Production Studio',
+  description: 'hubaab studio is a cinematic production studio specializing in cinematic videos and photography. We create beautiful visual stories through thoughtful collaboration and craft.',
   openGraph: {
-    title: 'Hubaab Studios — A Cinematic Production Studio',
+    title: 'hubaab studio — A Cinematic Production Studio',
     description: 'Cinematic videos and photography brought to life through storytelling and craft.',
     type: 'website',
   },

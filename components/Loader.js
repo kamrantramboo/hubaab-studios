@@ -43,12 +43,12 @@ export default function Loader() {
       <div className={styles.logoWrapper}>
         <img 
           src="/loader-logo.png" 
-          alt="Hubaab Studio Left"
+          alt="hubaab studio left"
           className={`${styles.logoImage} ${styles.leftImage} ${shrinking ? styles.shrink : ''} ${splitting ? styles.splitLeft : ''}`} 
         />
         <img 
           src="/loader-logo.png" 
-          alt="Hubaab Studio Right"
+          alt="hubaab studio right"
           className={`${styles.logoImage} ${styles.rightImage} ${shrinking ? styles.shrink : ''} ${splitting ? styles.splitRight : ''}`} 
         />
       </div>

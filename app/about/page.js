@@ -1,8 +1,8 @@
 import styles from './page.module.css';
 
 export const metadata = {
-  title: 'About — Hubaab Studios',
-  description: 'Hubaab Studios is a cinematic production studio specializing in cinematic videos and photography.',
+  title: 'About — hubaab studio',
+  description: 'hubaab studio is a cinematic production studio specializing in cinematic videos and photography.',
 };
 
 export default function AboutPage() {
@@ -12,7 +12,7 @@ export default function AboutPage() {
       <section className={styles.introSection}>
         <div className="container">
           <p className={styles.introText}>
-            Hubaab Studios is a cinematic production studio working across film, commercial, 
+            hubaab studio is a cinematic production studio working across film, commercial, 
             music, and fashion. We have a passion for creating beautiful work rooted in 
             storytelling, brought to life through thoughtful collaboration, craft, and 
             end-to-end creative, production, and post-production services.
