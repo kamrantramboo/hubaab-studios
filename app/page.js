@@ -95,54 +95,49 @@ export default function HomePage() {
             ))}
           </div>
         ) : projects.length > 0 ? (
-          <>
-            {/* Fullscreen video items */}
-            <div className={styles.videoList}>
-              {projects.map((project, i) => (
-                <Link
-                  href={`/work/${project.slug}`}
-                  key={project.id}
-                  className={`${styles.videoItem} ${project.is_vertical ? styles.isVertical : ''}`}
-                  data-item={project.title}
-                  style={{ '--video-align': project.video_alignment || 'top center' }}
-                >
-                  <div className={styles.videoEmbed}>
-                    {project.video_url ? (
-                      <video
-                        ref={(el) => (videoRefs.current[i] = el)}
-                        data-index={i}
-                        muted={isMuted}
-                        loop
-                        playsInline
-                        autoPlay={i === 0}
-                        preload="metadata"
-                        src={project.video_url}
-                        className={styles.video}
-                        style={{ objectPosition: project.video_alignment || 'top center' }}
-                      />
-                    ) : project.thumbnail_url ? (
-                      <img
-                        src={project.thumbnail_url}
-                        alt={project.title}
-                        className={styles.videoFallback}
-                        loading="lazy"
-                      />
-                    ) : (
-                      <div className={styles.videoPlaceholder}>
-                        <span>{project.client || project.title}</span>
-                      </div>
-                    )}
+          projects.map((project, i) => (
+            <Link
+              href={`/work/${project.slug}`}
+              key={project.id}
+              className={`${styles.videoItem} ${project.is_vertical ? styles.isVertical : ''}`}
+              data-item={project.title}
+              style={{ '--video-align': project.video_alignment || 'top center' }}
+            >
+              <div className={styles.videoEmbed}>
+                {project.video_url ? (
+                  <video
+                    ref={(el) => (videoRefs.current[i] = el)}
+                    data-index={i}
+                    muted={isMuted}
+                    loop
+                    playsInline
+                    autoPlay={i === 0}
+                    preload="metadata"
+                    src={project.video_url}
+                    className={styles.video}
+                    style={{ objectPosition: project.video_alignment || 'top center' }}
+                  />
+                ) : project.thumbnail_url ? (
+                  <img
+                    src={project.thumbnail_url}
+                    alt={project.title}
+                    className={styles.videoFallback}
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className={styles.videoPlaceholder}>
+                    <span>{project.client || project.title}</span>
                   </div>
-                  {/* Overlay Title */}
-                  <div className={styles.videoOverlayInfo}>
-                    <h2 className={styles.videoClient}>{project.client}</h2>
-                    <p className={styles.videoTitle}>{project.title}</p>
-                    <p className={styles.videoCategory}>{project.category}</p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </>
+                )}
+              </div>
+              {/* Overlay Title */}
+              <div className={styles.videoOverlayInfo}>
+                <h2 className={styles.videoClient}>{project.client}</h2>
+                <p className={styles.videoTitle}>{project.title}</p>
+                <p className={styles.videoCategory}>{project.category}</p>
+              </div>
+            </Link>
+          ))
         ) : (
           <div className={styles.emptyHero}>
             <p className={styles.emptyText}>Featured projects will appear here</p>
