@@ -138,7 +138,7 @@ export default function AboutPage() {
               <div className={styles.mapItem}>
                 <span className={styles.mapCity}>Srinagar Location</span>
                 <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1m2!1s0x38e18f2dbbd9eb05%3A0xe2ce6a8bc6ccce!2sSrinagar!5e0!3m2!1sen!2sin!4v1715000000000!5m2!1sen!2sin" 
+                  src="https://maps.google.com/maps?q=Srinagar,+Jammu+and+Kashmir&t=&z=13&ie=UTF8&iwloc=&output=embed" 
                   className={styles.mapEmbed}
                   allowFullScreen="" 
                   loading="lazy" 
@@ -148,7 +148,7 @@ export default function AboutPage() {
               <div className={styles.mapItem}>
                 <span className={styles.mapCity}>Delhi Location</span>
                 <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1m2!1s0x390cfd5b347eb62d%3A0x37205b715389640!2sNew%20Delhi%2C%20Delhi!5e0!3m2!1sen!2sin!4v1715000000001!5m2!1sen!2sin" 
+                  src="https://maps.google.com/maps?q=New+Delhi,+Delhi&t=&z=12&ie=UTF8&iwloc=&output=embed" 
                   className={styles.mapEmbed}
                   allowFullScreen="" 
                   loading="lazy" 
