@@ -95,7 +95,7 @@ export default function HomePage() {
             ))}
           </div>
         ) : projects.length > 0 ? (
-          projects.map((project, i) => (
+          projects.slice(1).map((project, i) => (
             <Link
               href={`/work/${project.slug}`}
               key={project.id}
