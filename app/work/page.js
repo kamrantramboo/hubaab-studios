@@ -96,10 +96,14 @@ export default function WorkPage() {
                       <video
                         src={project.video_url}
                         className={styles.thumbnail}
-                        autoPlay
                         muted={isMuted}
                         loop
                         playsInline
+                        onMouseEnter={(e) => e.target.play()}
+                        onMouseLeave={(e) => {
+                          e.target.pause();
+                          e.target.currentTime = 0;
+                        }}
                       />
                     ) : project.thumbnail_url ? (
                       <img

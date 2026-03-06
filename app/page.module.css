@@ -87,7 +87,6 @@
   align-items: center;
   text-align: center;
   scroll-snap-align: start;
-  scroll-snap-stop: always;
   background-color: #000;
   overflow: hidden;
 }
@@ -156,18 +155,15 @@
 /* Showcase Section */
 .showcase {
   position: relative;
-  padding-bottom: 0;
   width: 100%;
   height: 100vh;
   height: 100svh;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: y mandatory;
+  overflow-y: auto;
+  scroll-snap-type: y proximity;
   scroll-behavior: smooth;
   background-color: #000;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  overscroll-behavior-y: contain;
 }
 
 .showcase::-webkit-scrollbar {
@@ -187,7 +183,6 @@
   position: relative;
   overflow: hidden;
   scroll-snap-align: start;
-  scroll-snap-stop: always;
   background-color: #000;
 }
 
