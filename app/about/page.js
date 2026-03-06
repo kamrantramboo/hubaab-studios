@@ -1,57 +1,83 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase';
 import styles from './page.module.css';
 
-export const metadata = {
-  title: 'About — hubaab studio',
-  description: 'hubaab studio is a cinematic production studio specializing in cinematic videos and photography.',
-};
-
 export default function AboutPage() {
+  const [info, setInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchInfo() {
+      try {
+        const { data, error } = await supabase
+          .from('studio_info')
+          .select('*')
+          .eq('id', 1)
+          .single();
+
+        if (!error && data) {
+          // Parse JSON if they come as strings (depends on how Supabase returns JSONB in some clients)
+          const parseJSON = (val) => typeof val === 'string' ? JSON.parse(val) : val;
+          setInfo({
+            ...data,
+            services: parseJSON(data.services) || [],
+            clients: parseJSON(data.clients) || [],
+            industry: parseJSON(data.industry) || [],
+            press: parseJSON(data.press) || [],
+          });
+        }
+      } catch (err) {
+        console.error('Error fetching studio info:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchInfo();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.page}>
+        <div className="container">
+          <div className={styles.skeletonIntro}></div>
+        </div>
+      </div>
+    );
+  }
+
+  // Fallback if no data
+  const intro = info?.intro || 'hubaab studio is a cinematic production studio specializing in cinematic videos and photography.';
+  const services = info?.services || [];
+  const clients = info?.clients || [];
+  const industry = info?.industry || [];
+  const press = info?.press || [];
+
   return (
     <div className={styles.page}>
       {/* Intro — Bodeyco-style large text */}
       <section className={styles.introSection}>
         <div className="container">
-          <p className={styles.introText}>
-            hubaab studio is a cinematic production studio working across film, commercial, 
-            music, and fashion. We have a passion for creating beautiful work rooted in 
-            storytelling, brought to life through thoughtful collaboration, craft, and 
-            end-to-end creative, production, and post-production services.
-          </p>
+          <p className={styles.introText}>{intro}</p>
         </div>
       </section>
 
       <div className="container">
         {/* Services — matching Bodeyco layout */}
-        <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>Services</h2>
-          <div className={styles.servicesGrid}>
-            <div className={styles.serviceItem}>
-              <h3 className={styles.serviceTitle}>Creative</h3>
-              <p className={styles.serviceDesc}>
-                We work with brands and agencies to develop creative rooted in storytelling. 
-                Through our in-house team and studio partners, our creative process spans 
-                concept development, creative direction, art direction, and graphic and 
-                motion design.
-              </p>
+        {services.length > 0 && (
+          <section className={styles.section}>
+            <h2 className={styles.sectionTitle}>Services</h2>
+            <div className={styles.servicesGrid}>
+              {services.map((service, i) => (
+                <div key={i} className={styles.serviceItem}>
+                  <h3 className={styles.serviceTitle}>{service.title}</h3>
+                  <p className={styles.serviceDesc}>{service.desc}</p>
+                </div>
+              ))}
             </div>
-            <div className={styles.serviceItem}>
-              <h3 className={styles.serviceTitle}>Production</h3>
-              <p className={styles.serviceDesc}>
-                We serve as a full-service production partner for image and motion projects. 
-                We manage all aspects of production including budgeting, scheduling, crew and 
-                talent sourcing, casting, location management, and on-set execution.
-              </p>
-            </div>
-            <div className={styles.serviceItem}>
-              <h3 className={styles.serviceTitle}>Post-Production</h3>
-              <p className={styles.serviceDesc}>
-                We offer full post-production and finishing services including editing, color, 
-                VFX, sound, and music. Finishing is treated as the final stage of production, 
-                with hands-on oversight to ensure consistency and quality through delivery.
-              </p>
-            </div>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* Info — Clients + Industry side by side */}
         <section className={styles.section}>
@@ -59,29 +85,38 @@ export default function AboutPage() {
             <div className={styles.infoBlock}>
               <h2 className={styles.sectionTitle}>Clients</h2>
               <div className={styles.clientsGrid}>
-                {/* User will add their actual clients */}
-                <span className={styles.clientName}>Client names will appear here</span>
+                {clients.length > 0 ? clients.map((client, i) => (
+                  <span key={i} className={styles.clientName}>{client}</span>
+                )) : (
+                  <span className={styles.clientName} style={{ color: 'var(--text-dim)' }}>Client list coming soon</span>
+                )}
               </div>
             </div>
 
             <div className={styles.infoBlock}>
               <h2 className={styles.sectionTitle}>Industry</h2>
               <div className={styles.industryList}>
-                {['Cinematic', 'Commercial', 'Branded Content', 'Music', 'Fashion', 'Editorial', 'Film', 'Documentary'].map((item) => (
+                {industry.length > 0 ? industry.map((item) => (
                   <span key={item} className={styles.industryTag}>{item}</span>
-                ))}
+                )) : (
+                  <span className={styles.industryTag}>Cinematic Production</span>
+                )}
               </div>
             </div>
           </div>
         </section>
 
         {/* Press */}
-        <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>Press</h2>
-          <div className={styles.pressList}>
-            <p style={{ color: 'var(--text-dim)', fontSize: '0.9rem' }}>Press mentions will appear here</p>
-          </div>
-        </section>
+        {press.length > 0 && (
+          <section className={styles.section}>
+            <h2 className={styles.sectionTitle}>Press</h2>
+            <div className={styles.pressList}>
+              {press.map((p, i) => (
+                <p key={i} style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '8px' }}>{p}</p>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );

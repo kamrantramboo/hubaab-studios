@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import styles from './page.module.css';
 
-const tabs = ['Projects', 'News', 'Careers', 'Inquiries'];
+const tabs = ['Projects', 'News', 'Careers', 'Inquiries', 'Studio Info'];
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -35,18 +35,23 @@ export default function AdminDashboard() {
 
   async function fetchData() {
     setLoading(true);
-    const table = activeTab.toLowerCase();
-    let query = supabase.from(table).select('*');
+    const table = activeTab.toLowerCase().replace(' ', '_');
     
-    if (table === 'projects') {
-      query = query.order('sort_order', { ascending: true });
+    if (table === 'studio_info') {
+      const { data: result, error } = await supabase.from(table).select('*').eq('id', 1).single();
+      if (!error) setData(result ? [result] : []);
     } else {
-      query = query.order('created_at', { ascending: false });
+      let query = supabase.from(table).select('*');
+      
+      if (table === 'projects') {
+        query = query.order('sort_order', { ascending: true });
+      } else {
+        query = query.order('created_at', { ascending: false });
+      }
+
+      const { data: result, error } = await query;
+      if (!error) setData(result || []);
     }
-
-    const { data: result, error } = await query;
-
-    if (!error) setData(result || []);
     setLoading(false);
   }
 
@@ -57,13 +62,14 @@ export default function AdminDashboard() {
 
   async function handleDelete(id) {
     if (!confirm('Are you sure you want to delete this item?')) return;
-    const table = activeTab.toLowerCase();
+    const table = activeTab.toLowerCase().replace(' ', '_');
+    if (table === 'studio_info') return; // Cannot delete studio info
     await supabase.from(table).delete().eq('id', id);
     fetchData();
   }
 
   async function handleSave(formData) {
-    const table = activeTab.toLowerCase();
+    const table = activeTab.toLowerCase().replace(' ', '_');
     
     // Auto-generate slug if missing
     if (!formData.slug && formData.title) {
@@ -129,7 +135,7 @@ export default function AdminDashboard() {
       <div className="admin-content">
         <div className={styles.topBar}>
           <h1 className={styles.pageTitle}>{activeTab}</h1>
-          {activeTab !== 'Inquiries' && (
+          {activeTab !== 'Inquiries' && activeTab !== 'Studio Info' && (
             <button className="btn btn-primary" onClick={handleAdd}>
               + Add {activeTab.slice(0, -1)}
             </button>
@@ -191,10 +197,15 @@ export default function AdminDashboard() {
                     ))}
                     <td>
                       <div className={styles.actions}>
-                        {activeTab !== 'Inquiries' && (
+                        {(activeTab !== 'Inquiries' && activeTab !== 'Studio Info') && (
                           <button className={styles.editBtn} onClick={() => handleEdit(item)}>Edit</button>
                         )}
-                        <button className={styles.deleteBtn} onClick={() => handleDelete(item.id)}>Delete</button>
+                        {activeTab === 'Studio Info' && (
+                          <button className={styles.editBtn} onClick={() => handleEdit(item)}>Edit Info</button>
+                        )}
+                        {activeTab !== 'Studio Info' && (
+                          <button className={styles.deleteBtn} onClick={() => handleDelete(item.id)}>Delete</button>
+                        )}
                       </div>
                     </td>
                   </tr>
@@ -246,6 +257,10 @@ function getColumns(tab) {
             {v || 'new'}
           </span>
         )},
+      ];
+    case 'Studio Info':
+      return [
+        { key: 'intro', label: 'Intro' },
       ];
     default: return [];
   }
@@ -366,6 +381,14 @@ function getFormFields(type) {
         { key: 'type', label: 'Employment Type', placeholder: 'e.g. Freelance / Contract' },
         { key: 'description', label: 'Description', type: 'textarea', placeholder: 'Role description...' },
         { key: 'active', label: 'Active', type: 'checkbox', placeholder: 'Show on careers page' },
+      ];
+    case 'Studio Info':
+      return [
+        { key: 'intro', label: 'Studio Intro', type: 'textarea', placeholder: 'Studio description...' },
+        { key: 'services', label: 'Services (JSON)', type: 'textarea', placeholder: '[{"title": "...", "desc": "..."}]' },
+        { key: 'clients', label: 'Clients (JSON Array)', type: 'textarea', placeholder: '["Client 1", "Client 2"]' },
+        { key: 'industry', label: 'Industry Tags (JSON Array)', type: 'textarea', placeholder: '["Fashion", "Film"]' },
+        { key: 'press', label: 'Press (JSON Array)', type: 'textarea', placeholder: '["Press 1", "Press 2"]' },
       ];
     default:
       return [];
