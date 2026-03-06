@@ -9,7 +9,7 @@ export default function HomePage() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isMuted, setIsMuted] = useState(true);
+  const [unmutedId, setUnmutedId] = useState(null);
   const videoRefs = useRef([]);
   const sectionRef = useRef(null);
   const heroRef = useRef(null);
@@ -81,6 +81,12 @@ export default function HomePage() {
     };
   }, []);
 
+  const toggleMute = (e, id) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setUnmutedId(unmutedId === id ? null : id);
+  };
+
   return (
     <>
       {/* Showcase Section — Integrated snapping experience */}
@@ -89,14 +95,29 @@ export default function HomePage() {
         <div className={styles.heroSnap} ref={heroRef}>
           <div className={styles.heroBg}>
             {projects[0]?.video_url && (
-              <video
-                className={styles.heroVideo}
-                autoPlay
-                muted={isMuted}
-                loop
-                playsInline
-                src={projects[0].video_url}
-              />
+              <>
+                <video
+                  className={styles.heroVideo}
+                  autoPlay
+                  muted={unmutedId !== 'hero'}
+                  loop
+                  playsInline
+                  src={projects[0].video_url}
+                />
+                <button 
+                  className={styles.miniSoundToggle}
+                  onClick={(e) => toggleMute(e, 'hero')}
+                  style={{ bottom: '40px', right: 'var(--container-padding)', opacity: 1, transform: 'none' }}
+                >
+                  {unmutedId === 'hero' ? (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M11 5L6 9H2v6h4l5 4V5z"/></svg>
+                  ) : (
+                    <div className={styles.mutedIconWrapper}>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+                    </div>
+                  )}
+                </button>
+              </>
             )}
             <div className={styles.heroOverlay}></div>
           </div>
@@ -125,18 +146,32 @@ export default function HomePage() {
             >
               <div className={styles.videoEmbed}>
                 {project.video_url ? (
-                  <video
-                    ref={(el) => (videoRefs.current[i] = el)}
-                    data-index={i}
-                    muted={isMuted}
-                    loop
-                    playsInline
-                    autoPlay={i === 0}
-                    preload="metadata"
-                    src={project.video_url}
-                    className={styles.video}
-                    style={{ objectPosition: project.video_alignment || 'top center' }}
-                  />
+                  <>
+                    <video
+                      ref={(el) => (videoRefs.current[i] = el)}
+                      data-index={i}
+                      muted={unmutedId !== project.id}
+                      loop
+                      playsInline
+                      autoPlay={i === 0}
+                      preload="metadata"
+                      src={project.video_url}
+                      className={styles.video}
+                      style={{ objectPosition: project.video_alignment || 'top center' }}
+                    />
+                    <button 
+                      className={styles.miniSoundToggle}
+                      onClick={(e) => toggleMute(e, project.id)}
+                    >
+                      {unmutedId === project.id ? (
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M11 5L6 9H2v6h4l5 4V5z"/></svg>
+                      ) : (
+                        <div className={styles.mutedIconWrapper}>
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+                        </div>
+                      )}
+                    </button>
+                  </>
                 ) : project.thumbnail_url ? (
                   <img
                     src={project.thumbnail_url}
@@ -167,24 +202,6 @@ export default function HomePage() {
           </div>
         )}
       </section>
-
-      {/* Audio Toggle — outside scroll container for visibility */}
-      <button 
-        className={styles.soundToggle} 
-        onClick={(e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          setIsMuted(!isMuted);
-        }}
-        aria-label={isMuted ? "Unmute" : "Mute"}
-      >
-        {isMuted ? (
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/></svg>
-        ) : (
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 5L6 9H2v6h4l5 4V5zM19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-        )}
-        <span>{isMuted ? "Sound Off" : "Sound On"}</span>
-      </button>
     </>
   );
 }

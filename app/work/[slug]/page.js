@@ -10,6 +10,7 @@ export default function ProjectDetailPage() {
   const params = useParams();
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
 
   useEffect(() => {
     async function fetchProject() {
@@ -63,14 +64,28 @@ export default function ProjectDetailPage() {
         {/* Hero */}
         <div className={styles.hero}>
           {project.video_url ? (
-            <video
-              src={project.video_url}
-              className={styles.heroMedia}
-              autoPlay
-              muted
-              loop
-              playsInline
-            />
+            <div className={styles.heroMediaWrapper}>
+              <video
+                src={project.video_url}
+                className={styles.heroMedia}
+                autoPlay
+                muted={isMuted}
+                loop
+                playsInline
+              />
+              <button 
+                className={styles.miniSoundToggle}
+                onClick={() => setIsMuted(!isMuted)}
+              >
+                {!isMuted ? (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M11 5L6 9H2v6h4l5 4V5z"/></svg>
+                ) : (
+                  <div className={styles.mutedIconWrapper}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+                  </div>
+                )}
+              </button>
+            </div>
           ) : project.thumbnail_url ? (
             <img
               src={project.thumbnail_url}

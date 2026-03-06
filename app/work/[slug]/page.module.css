@@ -16,11 +16,48 @@
   margin-bottom: 48px;
 }
 
+.heroMediaWrapper {
+  position: relative;
+  width: 100%;
+}
+
 .heroMedia {
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
   display: block;
+}
+
+.miniSoundToggle {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  border-radius: 50%;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  z-index: 10;
+}
+
+.miniSoundToggle:hover {
+  background: rgba(255, 255, 255, 1);
+  color: #000;
+  transform: scale(1.05);
+}
+
+.mutedIconWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .heroPlaceholder {
