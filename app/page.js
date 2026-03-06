@@ -13,6 +13,8 @@ export default function HomePage() {
   const [videoProgress, setVideoProgress] = useState(0);
   const desktopVideoRefs = useRef([]);
   const mobileVideoRefs = useRef([]);
+  const projectItemRefs = useRef([]);
+  const isWheelLocked = useRef(false);
 
   useEffect(() => {
     async function fetchFeatured() {
@@ -63,6 +65,39 @@ export default function HomePage() {
     return () => videos.forEach((v) => observer.unobserve(v));
   }, [projects]);
 
+  // Desktop Global Scroll Handler
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) return;
+    if (projects.length === 0) return;
+
+    const handleWheel = (e) => {
+      if (isWheelLocked.current) return;
+      if (Math.abs(e.deltaY) < 20) return; // Ignore tiny micro-scrolls
+
+      let nextIndex = activeIndex;
+      if (e.deltaY > 0) {
+        // Scrolling down
+        nextIndex = Math.min(activeIndex + 1, projects.length - 1);
+      } else {
+        // Scrolling up
+        nextIndex = Math.max(activeIndex - 1, 0);
+      }
+
+      if (nextIndex !== activeIndex) {
+        isWheelLocked.current = true;
+        changeDesktopActive(nextIndex);
+        
+        // Lock wheel for 900ms to allow video crossfade and prevent hyper-scrolling
+        setTimeout(() => {
+          isWheelLocked.current = false;
+        }, 900);
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: true });
+    return () => window.removeEventListener('wheel', handleWheel);
+  }, [activeIndex, projects]);
+
   const toggleGlobalMute = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -77,25 +112,37 @@ export default function HomePage() {
     }
   };
 
-  const handleMouseEnter = (idx) => {
-    if (window.innerWidth >= 768) {
-      if (activeIndex !== idx) {
-        setVideoProgress(0); // Reset progress when switching
+  const changeDesktopActive = (idx) => {
+    if (activeIndex !== idx) {
+      setVideoProgress(0); 
+    }
+    setActiveIndex(idx);
+    
+    // Play the newly active desktop video instantly
+    if (desktopVideoRefs.current[idx]) {
+      desktopVideoRefs.current[idx].play().catch(() => {});
+    }
+    
+    // Pause others
+    desktopVideoRefs.current.forEach((vid, i) => {
+      if (i !== idx && vid) {
+        vid.pause();
+        vid.currentTime = 0;
       }
-      setActiveIndex(idx);
-      
-      // Play the newly active desktop video instantly
-      if (desktopVideoRefs.current[idx]) {
-        desktopVideoRefs.current[idx].play().catch(() => {});
-      }
-      
-      // Pause others
-      desktopVideoRefs.current.forEach((vid, i) => {
-        if (i !== idx && vid) {
-          vid.pause();
-          vid.currentTime = 0;
-        }
+    });
+
+    // Programmatically scroll the UI list down so the user sees the active item
+    if (projectItemRefs.current[idx]) {
+      projectItemRefs.current[idx].scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
       });
+    }
+  };
+
+  const handleMouseEnter = (idx) => {
+    if (window.innerWidth >= 768 && activeIndex !== idx && !isWheelLocked.current) {
+      changeDesktopActive(idx);
     }
   };
 
@@ -159,6 +206,7 @@ export default function HomePage() {
           return (
             <div 
               key={project.id} 
+              ref={(el) => (projectItemRefs.current[i] = el)}
               className={`${styles.projectBlock} ${isActive ? styles.activeBlock : ''}`}
               onMouseEnter={() => handleMouseEnter(i)}
             >
