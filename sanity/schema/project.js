@@ -66,6 +66,29 @@ export default {
       initialValue: false
     },
     {
+      name: 'is_vertical',
+      title: 'Is Vertical Video?',
+      type: 'boolean',
+      initialValue: false,
+      description: 'Enable for portrait/mobile format videos'
+    },
+    {
+      name: 'video_alignment',
+      title: 'Video Alignment',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Center', value: 'center center' },
+          { title: 'Top', value: 'center top' },
+          { title: 'Bottom', value: 'center bottom' },
+          { title: 'Left', value: 'left center' },
+          { title: 'Right', value: 'right center' },
+        ],
+      },
+      initialValue: 'center center',
+      description: 'Control how the video is positioned within its container'
+    },
+    {
       name: 'sortOrder',
       title: 'Sort Order',
       type: 'number',
