@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import styles from './page.module.css';
 
@@ -32,6 +32,32 @@ export default function InquiryPage() {
     budget: '',
     timeline: '',
   });
+
+  const [budgetOptions, setBudgetOptions] = useState([
+    { value: 'Under $5k', label: 'Under $5,000' },
+    { value: '$5k-$15k', label: '$5,000 – $15,000' },
+    { value: '$15k-$50k', label: '$15,000 – $50,000' },
+    { value: '$50k-$100k', label: '$50,000 – $100,000' },
+    { value: '$100k+', label: '$100,000+' }
+  ]);
+
+  useEffect(() => {
+    try {
+      // Roughly detect if user is in India to convert to INR
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      if (tz && (tz.includes('Kolkata') || tz.includes('Calcutta'))) {
+        setBudgetOptions([
+          { value: 'Under ₹5L', label: 'Under ₹5,00,000' },
+          { value: '₹5L-₹15L', label: '₹5,00,000 – ₹15,00,000' },
+          { value: '₹15L-₹50L', label: '₹15,00,000 – ₹50,00,000' },
+          { value: '₹50L-₹1Cr', label: '₹50,00,000 – ₹1,00,00,000' },
+          { value: '₹1Cr+', label: '₹1,00,00,000+' }
+        ]);
+      }
+    } catch (e) {
+      // Default to USD safely
+    }
+  }, []);
 
   const updateField = (field, value) => {
     setForm(prev => ({ ...prev, [field]: value }));
@@ -232,11 +258,9 @@ export default function InquiryPage() {
                   onChange={(e) => updateField('budget', e.target.value)}
                 >
                   <option value="">Select a range</option>
-                  <option value="Under $5k">Under $5,000</option>
-                  <option value="$5k-$15k">$5,000 – $15,000</option>
-                  <option value="$15k-$50k">$15,000 – $50,000</option>
-                  <option value="$50k-$100k">$50,000 – $100,000</option>
-                  <option value="$100k+">$100,000+</option>
+                  {budgetOptions.map(opt => (
+                    <option key={opt.value} value={opt.value}>{opt.label}</option>
+                  ))}
                 </select>
               </div>
               <div className="form-group">
