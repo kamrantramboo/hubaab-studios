@@ -132,6 +132,12 @@ export default function AboutPage() {
                  <span className={styles.contactLabel}>For Opportunities</span>
                  <a href="mailto:careers@hubaabstudios.com" className={styles.contactLink}>careers@hubaabstudios.com</a>
                </div>
+               <div className={styles.contactItem} style={{ marginTop: '16px' }}>
+                 <span className={styles.contactLabel}>Follow Us</span>
+                 <a href="https://www.instagram.com/hubaab_studios/?hl=en" target="_blank" rel="noopener noreferrer" className={styles.contactLink}>
+                   Instagram ↗
+                 </a>
+               </div>
             </div>
 
             <div className={styles.mapsGrid}>

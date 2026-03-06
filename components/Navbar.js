@@ -60,17 +60,17 @@ export default function Navbar() {
 
           {/* Desktop nav — comma-separated like Bodeyco */}
           <div className={styles.desktopNav}>
-            {navLinks.map((link, i) => (
-              <span key={link.href} className={styles.navItem}>
-                <Link
-                  href={link.href}
-                  className={`${styles.navLink} ${pathname === link.href ? styles.active : ''}`}
-                >
-                  {link.label}
-                </Link>
-                {i < navLinks.length - 1 && <span className={styles.comma}>,</span>}
-              </span>
-            ))}
+            <Link href="/work" className={`${styles.navLink} ${pathname.startsWith('/work') ? styles.active : ''}`}>
+              Work
+            </Link>
+            <span className={styles.comma}>,</span>
+            <Link href="/about" className={`${styles.navLink} ${pathname === '/about' ? styles.active : ''}`}>
+              About
+            </Link>
+            <span className={styles.comma}>,</span>
+            <Link href="/careers" className={`${styles.navLink} ${pathname === '/careers' ? styles.active : ''}`}>
+              Careers
+            </Link>
           </div>
 
           <div className={styles.right}>
@@ -94,16 +94,10 @@ export default function Navbar() {
           <div className={styles.menuSection}>
             <h2 className={styles.menuSectionTitle}>Menu</h2>
             <div className={styles.menuLinks}>
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={styles.menuLink}
-                  onClick={closeMenu}
-                >
-                  {link.label}
-                </Link>
-              ))}
+              <Link href="/work" onClick={closeMenu} className={styles.menuLink}>Work</Link>
+              <Link href="/about" onClick={closeMenu} className={styles.menuLink}>About</Link>
+              <Link href="/careers" onClick={closeMenu} className={styles.menuLink}>Careers</Link>
+              <Link href="/inquiry" onClick={closeMenu} className={styles.menuLink}>Inquire</Link>
             </div>
           </div>
 

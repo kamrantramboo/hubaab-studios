@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import styles from './page.module.css';
 
-const tabs = ['Projects', 'News', 'Careers', 'Inquiries', 'Studio Info'];
+const tabs = ['Projects', 'Careers', 'Inquiries', 'Studio Info'];
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -271,12 +271,6 @@ function getColumns(tab) {
         { key: 'video_alignment', label: 'Align' },
         { key: 'sort_order', label: 'Order' },
       ];
-    case 'News':
-      return [
-        { key: 'title', label: 'Title' },
-        { key: 'published', label: 'Published' },
-        { key: 'published_at', label: 'Date', render: (v) => v ? new Date(v).toLocaleDateString() : '—' },
-      ];
     case 'Careers':
       return [
         { key: 'title', label: 'Title' },
@@ -396,8 +390,6 @@ function getDefaultForm(type) {
   switch (type) {
     case 'Projects':
       return { title: '', client: '', slug: '', category: 'Cinematic', description: '', services: '', thumbnail_url: '', video_url: '', featured: false, is_vertical: false, video_alignment: 'top center', sort_order: 0 };
-    case 'News':
-      return { title: '', slug: '', excerpt: '', content: '', image_url: '', published: false, published_at: '' };
     case 'Careers':
       return { title: '', slug: '', type: 'Freelance / Contract', description: '', active: true };
     default:
@@ -421,16 +413,6 @@ function getFormFields(type) {
         { key: 'is_vertical', label: 'Vertical Layout', type: 'checkbox', placeholder: 'This is a portrait/vertical video' },
         { key: 'video_alignment', label: 'Video Crop Focus', type: 'select', options: ['top center', 'center center', 'bottom center'] },
         { key: 'sort_order', label: 'Sort Order', type: 'number', placeholder: '0' },
-      ];
-    case 'News':
-      return [
-        { key: 'title', label: 'Title', placeholder: 'Article title' },
-        { key: 'slug', label: 'Slug', placeholder: 'url-friendly-slug' },
-        { key: 'excerpt', label: 'Excerpt', type: 'textarea', placeholder: 'Short summary...' },
-        { key: 'content', label: 'Content', type: 'textarea', placeholder: 'Full article content...' },
-        { key: 'image_url', label: 'Image URL', placeholder: 'https://...' },
-        { key: 'published', label: 'Published', type: 'checkbox', placeholder: 'Make visible on site' },
-        { key: 'published_at', label: 'Published Date', type: 'date' },
       ];
     case 'Careers':
       return [

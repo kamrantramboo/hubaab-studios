@@ -155,7 +155,7 @@ CREATE TABLE IF NOT EXISTS studio_info (
 
 -- Insert the single default row if it doesn't exist
 INSERT INTO studio_info (id, intro)
-VALUES (1, 'Hubaab Studios is a creative video production agency based in Srinagar and New Delhi.')
+VALUES (1, 'Hubaab Studios is a premier cinematic video production and photography agency operating between the breathtaking landscapes of Srinagar and the bustling urban pulse of New Delhi. Founded with an uncompromising vision to blend raw emotive storytelling with high-end commercial aesthetics, the studio has built a reputation for crafting visually arresting narratives. Whether directing fashion films, producing large-scale commercials, or capturing fleeting documentary moments, our team brings a relentless dedication to lighting, composition, and authentic human connection to every single frame. We believe that truly memorable visuals don’t just look beautiful—they make you feel something profoundly real.')
 ON CONFLICT (id) DO NOTHING;
 
 -- Enable RLS

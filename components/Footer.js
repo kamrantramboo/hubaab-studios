@@ -51,7 +51,6 @@ export default function Footer() {
             <nav className={styles.colLinks}>
               <Link href="/work">Work</Link>
               <Link href="/about">About</Link>
-              <Link href="/news">News</Link>
               <Link href="/careers">Careers</Link>
             </nav>
           </div>
