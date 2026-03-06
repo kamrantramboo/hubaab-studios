@@ -48,7 +48,8 @@
   width: 100%;
   background: #000;
   height: 100vh;
-  padding-top: var(--nav-height); 
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
   position: relative;
