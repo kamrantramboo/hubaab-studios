@@ -168,8 +168,8 @@ export default function HomePage() {
               >
                 {isUnmuted ? "MUTE" : "UNMUTE"}
               </button>
-            </div>
-            
+              
+              {/* Project Info Overlay */}
               <Link href={`/work/${project.slug}`} className={styles.projectInfo}>
                 {isActive && (
                   <div className={styles.progressBar}>
@@ -179,16 +179,17 @@ export default function HomePage() {
                     />
                   </div>
                 )}
-                <div className={styles.infoLeft}>
-                  <span className={styles.client}>{project.client}</span>
-                </div>
-                <div className={styles.infoCenter}>
-                  <span className={styles.title}>{project.title}</span>
+                <div className={styles.infoContent}>
+                  <span className={styles.titleInfo}>
+                    {project.title} <span className={styles.separator}>—</span> <span className={styles.client}>{project.client}</span>
+                  </span>
+                  <span className={styles.category}>{project.category}</span>
                 </div>
               </Link>
             </div>
-          );
-        })}
+          </div>
+        );
+      })}
       </div>
     </section>
   );

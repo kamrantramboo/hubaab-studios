@@ -49,15 +49,15 @@
   background: #000;
   min-height: 100vh;
   padding-top: var(--nav-height); /* Clear global nav */
-  padding-bottom: 0px; /* Removed bottom padding for seamless feel */
+  padding-bottom: 0px; 
   display: flex;
   flex-direction: column;
-  gap: 0px;  /* Removed gap for seamless mobile feed */
+  gap: 0px; 
   position: relative;
 }
 
 .desktopSoundToggle {
-  display: none; /* hidden on mobile */
+  display: none; 
 }
 
 /* On mobile side, these span 100% width stacked */
@@ -78,9 +78,9 @@
 .videoWrapper {
   width: 100%;
   position: relative;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 4 / 5; /* Slightly taller aspect ratio for mobile feed, like Reels */
   background: #111;
-  /* Removed rounded corners or margins for a seamless edge-to-edge look */
+  overflow: hidden;
 }
 
 .videoField {
@@ -98,8 +98,8 @@
 
 .mobileSoundToggle {
   position: absolute;
-  bottom: 12px;
-  right: 12px;
+  top: 16px; /* Moved to top so it doesn't clash with title overlay */
+  right: 16px;
   padding: 6px 12px;
   background: transparent;
   color: rgba(255, 255, 255, 0.5);
@@ -111,6 +111,7 @@
   cursor: pointer;
   z-index: 10;
   transition: color var(--transition-fast);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
 }
 
 .mobileSoundToggle:hover {
@@ -118,43 +119,74 @@
   color: #fff;
 }
 
+/* Base Project Info (Mobile overlaid on video) */
 .projectInfo {
-  padding: 16px var(--container-padding) 32px var(--container-padding);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 40px var(--container-padding) 24px var(--container-padding);
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
   display: flex;
   flex-direction: column;
   gap: 4px;
   color: #fff;
   text-decoration: none;
-  background: #000; /* Ensure solid background between seamless videos */
-  position: relative;
+  z-index: 5;
 }
 
 .progressBar {
   display: none; /* Hide progress bar on mobile reactive feed */
 }
 
-.client {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  opacity: 0.7;
+.infoContent {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.title {
+.titleInfo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-size: 1.25rem;
   font-weight: 500;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
 }
 
-.infoCenter { display: block; }
+.client {
+  font-size: 0.8rem;
+  font-weight: 400;
+  opacity: 0.8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
 
-/* Desktop Interactive List Layout */
+.separator {
+  opacity: 0.5;
+  font-weight: 300;
+}
+
+.category {
+  font-size: 0.75rem;
+  opacity: 0.6;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+
+/* -------------------------------------------
+   Desktop Interactive List Layout
+   ------------------------------------------- */
 @media (min-width: 768px) {
   .homeContainer {
     height: 100vh;
     padding: 0;
-    overflow: hidden;
-    justify-content: flex-end; /* Stack list items at bottom */
+    overflow: hidden; /* Prevent page scroll */
+    justify-content: flex-end; 
     gap: 0;
+    pointer-events: none; /* Crucial: Let scroll events reach the inner list wrapper */
   }
 
   .desktopSoundToggle {
@@ -173,6 +205,7 @@
     cursor: pointer;
     z-index: 50;
     transition: color var(--transition-fast), transform var(--transition-fast);
+    pointer-events: auto; /* Re-enable clicks */
   }
   
   .desktopSoundToggle:hover {
@@ -184,19 +217,21 @@
     display: none;
   }
 
-  /* Wrap list items and constrain to 1/4th screen on bottom left */
+  /* Scrollable 1/4th List area */
   .listWrapper {
     position: absolute;
-    bottom: var(--container-padding); /* Optional breathing room */
+    bottom: var(--container-padding);
     left: var(--container-padding);
-    width: 25vw;
-    max-width: 400px;
-    min-width: 280px;
-    max-height: 60vh;
+    width: 28vw;
+    max-width: 450px;
+    min-width: 320px;
+    max-height: 50vh; /* Constrained height */
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
+    overflow-y: auto; /* Enable scrolling */
     z-index: 10;
+    pointer-events: auto; /* Re-enable scroll/clicks for this container */
+    
     /* Hide scrollbar */
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -208,9 +243,10 @@
 
   .projectBlock {
     width: 100%;
-    position: static; /* Important: allows videoWrapper to position fixed to viewport */
+    position: static; 
   }
 
+  /* The actual background video */
   .videoWrapper {
     position: fixed;
     top: 0;
@@ -218,32 +254,30 @@
     width: 100vw;
     height: 100vh;
     aspect-ratio: auto; /* Override mobile */
+    background: transparent;
     opacity: 0;
-    z-index: 1; /* Background layer behind text */
+    z-index: 1; 
     transition: opacity 0.6s ease;
-    pointer-events: none; /* Let clicks pass through background */
+    pointer-events: none; 
   }
 
   .activeBlock .videoWrapper {
     opacity: 1;
-    z-index: 2; /* Bring active video forward slightly so transition feels smooth */
+    z-index: 2; 
   }
 
+  /* Restyle ProjectInfo to be a static minimal list row on Desktop */
   .projectInfo {
+    position: relative; /* Break out of absolute mobile styling */
+    bottom: auto; left: auto; right: auto;
     width: 100%;
-    flex-direction: column; /* Stack client & title vertically because it's narrow */
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: 16px 20px;
+    padding: 12px 16px; /* Ultra minimal padding */
+    background: transparent; /* Remove mobile gradient */
     border-top: 1px solid rgba(255, 255, 255, 0.15);
-    background: transparent;
     transition: all var(--transition-fast);
-    position: relative;
-    z-index: 10; /* Important: float above all fixed videos */
-    gap: 4px;
+    z-index: 10; 
   }
 
-  /* Progress Bar styling */
   .progressBar {
     display: block;
     position: absolute;
@@ -260,51 +294,51 @@
     width: 100%;
     background: #fff;
     transform-origin: left center;
-    /* transition removed to let it track smoothly with hardware via JS inline styles, 
-       or keep a very fast linear transition: */
-    /* transition: transform 0.1s linear; */
   }
 
   .projectBlock:last-child .projectInfo {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15); /* Bottom border for last item */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15); 
   }
 
-  /* Typography for desktop row */
-  .client, .title {
+  /* Ultra-minimal single line flex layout */
+  .infoContent {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    opacity: 0.5; /* Inactive opacity by default */
+    transition: opacity var(--transition-fast);
+  }
+
+  .titleInfo {
     font-size: 0.85rem;
+    font-weight: 500;
+    text-shadow: none;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    font-weight: 400;
-    opacity: 0.5; /* Default inactive state */
-    transition: opacity var(--transition-fast), font-weight var(--transition-fast);
   }
 
-  .title {
-    font-size: 1rem; /* Slightly larger on desktop for title */
+  .client {
+    font-size: 0.75rem;
   }
 
-  /* Grid alignment removed because we are stacked flex-column */
-  .infoLeft, .infoCenter { 
-    width: 100%; 
-    text-align: left; 
+  .category {
+    font-size: 0.65rem;
+    text-shadow: none;
+    text-align: right;
   }
 
   /* Hover & Active States for list rows */
   .activeBlock .projectInfo {
-    background: rgba(0, 0, 0, 0.3); /* Subtle backdrop for active */
+    background: rgba(0, 0, 0, 0.4); 
   }
 
-  .activeBlock .client,
-  .activeBlock .title {
-    opacity: 1;
-  }
-
-  .activeBlock .title {
-    font-weight: 600; /* Bold for active item */
+  .activeBlock .infoContent {
+    opacity: 1; /* Brighten active text */
   }
 
   .projectInfo:hover {
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.6);
     cursor: pointer;
   }
 }
