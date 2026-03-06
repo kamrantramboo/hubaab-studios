@@ -116,17 +116,8 @@ export default function Navbar() {
           <div className={`${styles.menuSection} ${styles.menuSectionBorder}`}>
             <h2 className={styles.menuSectionTitle}>Platforms</h2>
             <div className={styles.menuLinks}>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className={styles.menuLink}>
+              <a href="https://www.instagram.com/hubaab_studios/?hl=en" target="_blank" rel="noopener noreferrer" className={styles.menuLink}>
                 Instagram
-              </a>
-              <a href="https://vimeo.com" target="_blank" rel="noopener noreferrer" className={styles.menuLink}>
-                Vimeo
-              </a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className={styles.menuLink}>
-                YouTube
-              </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className={styles.menuLink}>
-                LinkedIn
               </a>
             </div>
           </div>

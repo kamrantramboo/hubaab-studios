@@ -65,6 +65,29 @@ export default function HomePage() {
     <>
       {/* Showcase Section — Integrated snapping experience */}
       <section className={styles.showcase} ref={sectionRef}>
+        {/* Hero — first snap item */}
+        <div className={styles.heroSnap}>
+          <div className={styles.heroBg}>
+            {projects[0]?.video_url && (
+              <video
+                className={styles.heroVideo}
+                autoPlay
+                muted
+                loop
+                playsInline
+                src={projects[0].video_url}
+              />
+            )}
+            <div className={styles.heroOverlay}></div>
+          </div>
+          <div className={styles.heroContent}>
+            <span className={styles.heroTagline}>A Cinematic Production Studio</span>
+            <Link href="/inquiry" className={styles.heroCta}>
+              Start a Project
+            </Link>
+          </div>
+        </div>
+
         {loading ? (
           <div className={styles.loadingState}>
             {[...Array(3)].map((_, i) => (
@@ -128,25 +151,25 @@ export default function HomePage() {
             </span>
           </div>
         )}
-
-        {/* Audio Toggle */}
-        <button 
-          className={styles.soundToggle} 
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            setIsMuted(!isMuted);
-          }}
-          aria-label={isMuted ? "Unmute" : "Mute"}
-        >
-          {isMuted ? (
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/></svg>
-          ) : (
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 5L6 9H2v6h4l5 4V5zM19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
-          )}
-          <span>{isMuted ? "Sound Off" : "Sound On"}</span>
-        </button>
       </section>
+
+      {/* Audio Toggle — outside scroll container for visibility */}
+      <button 
+        className={styles.soundToggle} 
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setIsMuted(!isMuted);
+        }}
+        aria-label={isMuted ? "Unmute" : "Mute"}
+      >
+        {isMuted ? (
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/></svg>
+        ) : (
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 5L6 9H2v6h4l5 4V5zM19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+        )}
+        <span>{isMuted ? "Sound Off" : "Sound On"}</span>
+      </button>
     </>
   );
 }
