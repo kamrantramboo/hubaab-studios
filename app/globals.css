@@ -517,6 +517,13 @@ p {
   border: 1px solid var(--border);
   padding: 32px;
   transition: all var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+}
+
+.career-card .btn {
+  align-self: flex-end;
+  margin-top: auto;
 }
 
 .career-card:hover {
