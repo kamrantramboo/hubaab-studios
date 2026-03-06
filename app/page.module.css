@@ -186,7 +186,6 @@
     overflow: hidden; /* Prevent page scroll */
     justify-content: flex-end; 
     gap: 0;
-    pointer-events: none; /* Crucial: Let scroll events reach the inner list wrapper */
   }
 
   .desktopSoundToggle {
@@ -205,7 +204,6 @@
     cursor: pointer;
     z-index: 50;
     transition: color var(--transition-fast), transform var(--transition-fast);
-    pointer-events: auto; /* Re-enable clicks */
   }
   
   .desktopSoundToggle:hover {
@@ -222,15 +220,15 @@
     position: absolute;
     bottom: var(--container-padding);
     left: var(--container-padding);
-    width: 28vw;
-    max-width: 450px;
-    min-width: 320px;
+    width: 25vw;
+    max-width: 400px;
+    min-width: 280px;
+    height: auto;
     max-height: 50vh; /* Constrained height */
     display: flex;
     flex-direction: column;
     overflow-y: auto; /* Enable scrolling */
-    z-index: 10;
-    pointer-events: auto; /* Re-enable scroll/clicks for this container */
+    z-index: 50; /* Super high z-index to guarantee it sits above the video */
     
     /* Hide scrollbar */
     scrollbar-width: none;
@@ -243,7 +241,8 @@
 
   .projectBlock {
     width: 100%;
-    position: static; 
+    position: relative; /* Changed from static to establish stacking context */
+    z-index: 51;
   }
 
   /* The actual background video */
@@ -256,14 +255,14 @@
     aspect-ratio: auto; /* Override mobile */
     background: transparent;
     opacity: 0;
-    z-index: 1; 
+    z-index: 10; /* Lower than the listWrapper */
     transition: opacity 0.6s ease;
-    pointer-events: none; 
+    pointer-events: none; /* Ignore clicks on the video itself */
   }
 
   .activeBlock .videoWrapper {
     opacity: 1;
-    z-index: 2; 
+    z-index: 11; 
   }
 
   /* Restyle ProjectInfo to be a static minimal list row on Desktop */
@@ -275,7 +274,7 @@
     background: transparent; /* Remove mobile gradient */
     border-top: 1px solid rgba(255, 255, 255, 0.15);
     transition: all var(--transition-fast);
-    z-index: 10; 
+    z-index: 55; /* Force above everything */
   }
 
   .progressBar {
