@@ -300,15 +300,11 @@
 
   /* Project Info Minimal Rows */
   .projectInfo {
-    position: relative; /* Break out of absolute mobile styling */
+    position: relative; 
     width: 100%;
     padding: 14px 16px; 
-    background: rgba(0,0,0,0.2); /* Slight glassmorphism base */
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: transparent; /* Removed glassmorphism gradient entirely */
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
     transition: all var(--transition-fast);
     z-index: 15; 
   }
@@ -365,15 +361,25 @@
 
   /* Hover & Active States for list rows */
   .activeBlock .projectInfo {
-    background: rgba(0, 0, 0, 0.4); 
+    background: transparent; 
   }
 
   .activeBlock .infoContent {
     opacity: 1; /* Brighten active text */
   }
 
+  /* Make active title bolder to stand out more */
+  .activeBlock .titleInfo {
+    font-weight: 700; 
+  }
+
   .projectInfo:hover {
-    background: rgba(0, 0, 0, 0.6);
+    background: transparent;
     cursor: pointer;
+  }
+  
+  /* Brighten inactive items slightly on hover */
+  .projectInfo:hover .infoContent {
+    opacity: 0.8; 
   }
 }
