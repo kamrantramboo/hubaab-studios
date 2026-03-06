@@ -12,13 +12,9 @@
 }
 
 .navbar.scrolled {
-  background-color: rgba(10, 10, 10, 0.4);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-}
-
-:global(.light-theme) .navbar.scrolled {
-  background-color: rgba(240, 240, 240, 0.7);
+  background-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .inner {

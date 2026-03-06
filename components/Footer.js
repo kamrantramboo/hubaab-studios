@@ -35,8 +35,10 @@ export default function Footer() {
 
   if (pathname?.startsWith('/admin')) return null;
 
+  const isLightTheme = pathname?.startsWith('/work');
+
   return (
-    <footer className={styles.footer}>
+    <footer className={`${styles.footer} ${isLightTheme ? 'light-theme' : ''}`}>
       <div className={styles.inner}>
         {/* Top section: brand */}
         <div className={styles.brand}>
