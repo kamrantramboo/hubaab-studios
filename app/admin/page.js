@@ -36,10 +36,15 @@ export default function AdminDashboard() {
   async function fetchData() {
     setLoading(true);
     const table = activeTab.toLowerCase();
-    const { data: result, error } = await supabase
-      .from(table)
-      .select('*')
-      .order('created_at', { ascending: false });
+    let query = supabase.from(table).select('*');
+    
+    if (table === 'projects') {
+      query = query.order('sort_order', { ascending: true });
+    } else {
+      query = query.order('created_at', { ascending: false });
+    }
+
+    const { data: result, error } = await query;
 
     if (!error) setData(result || []);
     setLoading(false);
@@ -217,6 +222,7 @@ function getColumns(tab) {
         { key: 'category', label: 'Category' },
         { key: 'featured', label: 'Featured' },
         { key: 'is_vertical', label: 'Vertical' },
+        { key: 'sort_order', label: 'Order' },
       ];
     case 'News':
       return [
@@ -248,8 +254,10 @@ function getColumns(tab) {
 function AdminForm({ type, item, onSave, onCancel }) {
   const [form, setForm] = useState(item || getDefaultForm(type));
 
-  function update(field, value) {
-    setForm(prev => ({ ...prev, [field]: value }));
+  function update(field, value, type) {
+    let finalValue = value;
+    if (type === 'number') finalValue = parseInt(value, 10) || 0;
+    setForm(prev => ({ ...prev, [field]: finalValue }));
   }
 
   function handleSubmit(e) {
@@ -270,7 +278,7 @@ function AdminForm({ type, item, onSave, onCancel }) {
               <textarea
                 className="form-input form-textarea"
                 value={form[field.key] || ''}
-                onChange={(e) => update(field.key, e.target.value)}
+                onChange={(e) => update(field.key, e.target.value, field.type)}
                 placeholder={field.placeholder}
               />
             ) : field.type === 'checkbox' ? (
@@ -278,7 +286,7 @@ function AdminForm({ type, item, onSave, onCancel }) {
                 <input
                   type="checkbox"
                   checked={form[field.key] || false}
-                  onChange={(e) => update(field.key, e.target.checked)}
+                  onChange={(e) => update(field.key, e.target.checked, field.type)}
                 />
                 <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{field.placeholder}</span>
               </label>
@@ -286,7 +294,7 @@ function AdminForm({ type, item, onSave, onCancel }) {
               <select
                 className="form-select"
                 value={form[field.key] || ''}
-                onChange={(e) => update(field.key, e.target.value)}
+                onChange={(e) => update(field.key, e.target.value, field.type)}
               >
                 {field.options.map(o => (
                   <option key={o} value={o}>{o}</option>
@@ -297,7 +305,7 @@ function AdminForm({ type, item, onSave, onCancel }) {
                 type={field.type || 'text'}
                 className="form-input"
                 value={form[field.key] || ''}
-                onChange={(e) => update(field.key, e.target.value)}
+                onChange={(e) => update(field.key, e.target.value, field.type)}
                 placeholder={field.placeholder}
               />
             )}
