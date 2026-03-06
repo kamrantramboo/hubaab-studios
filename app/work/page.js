@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { sanityFetch } from '@/lib/sanity';
+import styles from './page.module.css';
 
 const categories = ['All', 'Cinematic', 'Commercial', 'Music', 'Fashion', 'Editorial', 'Film'];
 

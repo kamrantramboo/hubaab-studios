@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { sanityFetch } from '@/lib/sanity';
+import styles from './page.module.css';
 
 export default function ProjectDetailPage() {
   const params = useParams();

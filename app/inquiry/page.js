@@ -2,6 +2,16 @@
 
 import { useState, useEffect } from 'react';
 import { sanityClient } from '@/lib/sanity';
+import styles from './page.module.css';
+
+const serviceOptions = [
+  'Cinematic Video',
+  'Commercial Photography',
+  'Social Media Reels',
+  'Brand Identity',
+  'Production Support',
+  'Post-Production'
+];
 
 export default function InquiryPage() {
   const [step, setStep] = useState(1);

@@ -3,6 +3,7 @@
 import { useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { sanityClient } from '@/lib/sanity';
+import styles from './page.module.css';
 
 function ApplyForm() {
   const searchParams = useSearchParams();

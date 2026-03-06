@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { sanityFetch } from '@/lib/sanity';
+import styles from './page.module.css';
 
 export default function AboutPage() {
   const [info, setInfo] = useState(null);

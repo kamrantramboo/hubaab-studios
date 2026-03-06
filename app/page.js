@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { sanityFetch } from '@/lib/sanity';
+import styles from './page.module.css';
 
 export default function HomePage() {
   const [projects, setProjects] = useState([]);
