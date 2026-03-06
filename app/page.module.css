@@ -105,12 +105,11 @@
 /* Mobile Overlays */
 .mobileSoundToggle {
   position: absolute;
-  bottom: 120px; /* Elevated to sit clearly above the project title text */
+  bottom: 24px; 
   right: 16px;
   padding: 6px 12px;
-  background: rgba(0, 0, 0, 0.3); /* Subtle backdrop for readability */
-  border-radius: 20px;
-  color: rgba(255, 255, 255, 0.8);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.5);
   font-size: 0.65rem;
   font-weight: 700;
   border: none;
