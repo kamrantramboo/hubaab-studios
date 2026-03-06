@@ -32,8 +32,6 @@ export default function Footer() {
     return () => clearInterval(interval);
   }, []);
 
-  if (pathname === '/' || pathname?.startsWith('/studio')) return null;
-
   const isLightTheme = pathname?.startsWith('/work');
 
   return (

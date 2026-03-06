@@ -55,8 +55,8 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, []);
 
-  // Don't show navbar on admin pages
-  if (pathname?.startsWith('/studio')) return null;
+  // Pathname is still useful for active links, but we don't need to hide the whole navbar here
+  // because this Navbar only exists in the (website) layout.
 
   const closeMenu = () => setMenuOpen(false);
   const isLightTheme = pathname?.startsWith('/work');

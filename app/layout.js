@@ -22,12 +22,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Loader />
-        <Navbar />
-        <main className="main-wrapper">
-          {children}
-        </main>
-        <Footer />
+        {children}
       </body>
     </html>
   );
