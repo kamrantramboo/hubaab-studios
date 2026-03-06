@@ -10,7 +10,7 @@
   align-items: center;
   margin-bottom: 40px;
   padding-bottom: 24px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: none;
   font-size: 0.65rem;
   font-weight: 700;
   text-transform: uppercase;
