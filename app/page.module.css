@@ -1,390 +1,256 @@
-/* ============================================
-   Homepage — Bodeyco-inspired Showcase
-   ============================================ */
-
-/* Hero */
-.hero {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: var(--container-padding);
-  position: relative;
-}
-
-.heroBg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  overflow: hidden;
-}
-
-.heroVideo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-}
-
-.heroOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to bottom, rgba(10,10,10,0.4), rgba(10,10,10,0.8));
-}
-
-.heroContent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 28px;
-  animation: fadeInUp 1s ease forwards;
-  z-index: 2;
-  position: relative;
-}
-
-.heroTagline {
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.25em;
-  color: var(--text-muted);
-  font-weight: 700;
-}
-
-.heroCta {
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--text-secondary);
-  text-decoration: none;
-  border-bottom: 1px solid var(--text-dim);
-  padding-bottom: 4px;
-  transition: all var(--transition-fast);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.heroCta:hover {
-  color: var(--text-primary);
-  border-color: var(--text-primary);
-}
-
-/* Hero — First snap item */
-.heroSnap {
-  width: 100%;
-  height: 100vh;
-  height: 100svh;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  scroll-snap-align: start;
-  background-color: #000;
-  overflow: hidden;
-}
-
-.heroBg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  overflow: hidden;
-}
-
-.heroVideo {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-}
-
-.heroOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to bottom, rgba(10,10,10,0.4), rgba(10,10,10,0.8));
-}
-
-.heroContent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 28px;
-  animation: fadeInUp 1s ease forwards;
-  z-index: 2;
-  position: relative;
-}
-
-.heroTagline {
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.25em;
-  color: var(--text-muted);
-  font-weight: 700;
-}
-
-.heroCta {
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--text-secondary);
-  text-decoration: none;
-  border-bottom: 1px solid var(--text-dim);
-  padding-bottom: 4px;
-  transition: all var(--transition-fast);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.heroCta:hover {
-  color: var(--text-primary);
-  border-color: var(--text-primary);
-}
-
-/* Showcase Section */
-.showcase {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  height: 100svh;
-  overflow-y: auto;
-  scroll-snap-type: y proximity;
-  scroll-behavior: smooth;
-  background-color: #000;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.showcase::-webkit-scrollbar {
-  display: none;
-}
-
-/* Video List — stacked fullscreen items */
-.videoList {
-  display: flex;
-  flex-direction: column;
-}
-
-.videoItem {
-  width: 100%;
-  height: 100vh;
-  height: 100svh;
-  position: relative;
-  overflow: hidden;
-  scroll-snap-align: start;
-  background-color: #000;
-}
-
-.videoEmbed {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-.video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: var(--video-align, top center);
-  opacity: 0;
-  transition: opacity 300ms ease;
-}
-
-.video[src] {
-  opacity: 1;
-}
-
-.videoFallback {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.videoPlaceholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
-  font-size: 1rem;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-}
-
-/* Vertical / Portrait Video Tweaks */
-.videoItem.isVertical .video {
-  object-fit: contain;
-  background: #000;
-  object-position: top center;
-}
-
-/* Speaker Icon Overlay */
-.miniSoundToggle {
-  position: absolute;
-  bottom: 120px; /* Above meta info */
-  right: var(--container-padding);
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(8px);
-  border-radius: 50%;
-  color: #fff;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all var(--transition-fast);
-  z-index: 100;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  pointer-events: auto;
-}
-
-.videoItem:hover .miniSoundToggle {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.miniSoundToggle:hover {
-  background: rgba(255, 255, 255, 1);
-  color: #000;
-  transform: scale(1.1);
-}
-
-.mutedIconWrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.videoItem.isVertical::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: inherit;
-  filter: blur(40px) brightness(0.4);
-  z-index: -1;
-}
-
-/* Video Overlay Info */
-.videoOverlayInfo {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 40px var(--container-padding);
-  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  color: var(--text-primary);
-  z-index: 10;
-  pointer-events: none;
-}
-
-.videoClient {
-  font-size: clamp(1rem, 1.5vw, 1.3rem);
-  font-weight: 700;
-  line-height: 1.1;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.videoTitle {
-  font-size: clamp(0.75rem, 1vw, 0.85rem);
-  color: var(--text-secondary);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.videoCategory {
-  font-size: 0.65rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-weight: 700;
-  margin-top: 4px;
-}
-
-/* Loading State */
 .loadingState {
+  height: 100vh;
   display: flex;
-  flex-direction: column;
-  gap: 0;
+  align-items: center;
+  justify-content: center;
+  background: #000;
 }
 
 .skeleton {
-  width: 100%;
-  height: 80vh;
-  background: linear-gradient(90deg, var(--bg-secondary) 25%, var(--bg-tertiary) 50%, var(--bg-secondary) 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #fff;
+  animation: spin 1s linear infinite;
 }
 
-/* Empty State */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 .emptyHero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  color: #fff;
+  font-family: var(--font-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
   text-align: center;
-  padding: 120px 20px;
-  border: 1px dashed var(--border);
-  margin: 0 var(--container-padding);
 }
 
 .emptyText {
-  font-size: 1.1rem;
-  color: var(--text-secondary);
-  margin-bottom: 8px;
+  font-size: 1.2rem;
 }
 
 .emptySubtext {
-  font-size: 0.82rem;
-  color: var(--text-dim);
+  font-size: 0.8rem;
+  opacity: 0.5;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .heroSnap {
-    height: 100svh;
+/* Base Mobile Layout (Reactive List) */
+.homeContainer {
+  width: 100%;
+  background: #000;
+  min-height: 100vh;
+  padding-top: var(--nav-height); /* Clear global nav */
+  padding-bottom: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  position: relative;
+}
+
+.desktopSoundToggle {
+  display: none; /* hidden on mobile */
+}
+
+.projectBlock {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+}
+
+.videoWrapper {
+  width: 100%;
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #111;
+}
+
+.videoField {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.placeholderBg {
+  width: 100%;
+  height: 100%;
+  background: #333;
+}
+
+.mobileSoundToggle {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  padding: 6px 12px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  border-radius: 40px;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  z-index: 10;
+  transition: all var(--transition-fast);
+}
+
+.mobileSoundToggle:hover {
+  background: rgba(255, 255, 255, 1);
+  color: #000;
+}
+
+.projectInfo {
+  padding: 0 var(--container-padding);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.client {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.7;
+}
+
+.title {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.category {
+  font-size: 0.85rem;
+  opacity: 0.5;
+}
+
+.infoCenter { display: block; }
+.infoRight { display: block; }
+
+/* Desktop Interactive List Layout */
+@media (min-width: 768px) {
+  .homeContainer {
+    height: 100vh;
+    padding: 0;
+    overflow: hidden;
+    justify-content: flex-end; /* Stack list items at bottom */
+    gap: 0;
   }
 
-  .videoItem {
-    height: 100svh;
+  .desktopSoundToggle {
+    display: block;
+    position: absolute;
+    top: calc(var(--nav-height) + 16px);
+    right: var(--container-padding);
+    padding: 8px 16px;
+    background: transparent;
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: none;
+    cursor: pointer;
+    z-index: 50;
+    transition: opacity var(--transition-fast), transform var(--transition-fast);
+  }
+  
+  .desktopSoundToggle:hover {
+    opacity: 0.7;
+    transform: scale(1.05);
   }
 
-  .videoOverlayInfo {
-    padding: 24px var(--container-padding);
+  .mobileSoundToggle {
+    display: none;
   }
 
-  .videoClient {
-    font-size: 1.1rem;
+  .projectBlock {
+    width: 100%;
+    position: static; /* Important: allows videoWrapper to position fixed to viewport */
   }
 
-  .videoTitle {
-    font-size: 0.8rem;
+  .videoWrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    aspect-ratio: auto; /* Override mobile */
+    opacity: 0;
+    z-index: 1; /* Background layer behind text */
+    transition: opacity 0.6s ease;
+    pointer-events: none; /* Let clicks pass through background */
   }
 
-  .miniSoundToggle {
+  .activeBlock .videoWrapper {
     opacity: 1;
-    transform: none;
-    bottom: 100px;
-    width: 32px;
-    height: 32px;
+    z-index: 2; /* Bring active video forward slightly so transition feels smooth */
+  }
+
+  .projectInfo {
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px var(--container-padding);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    background: transparent;
+    transition: all var(--transition-fast);
+    position: relative;
+    z-index: 10; /* Important: float above all fixed videos */
+  }
+
+  .projectBlock:last-child .projectInfo {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15); /* Bottom border for last item */
+  }
+
+  /* Typography for desktop row */
+  .client, .title, .category {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 400;
+    opacity: 0.5; /* Default inactive state */
+    transition: opacity var(--transition-fast), font-weight var(--transition-fast);
+  }
+
+  .title {
+    font-size: 0.85rem; /* Match size on desktop */
+  }
+
+  /* Grid alignment for desktop info */
+  .infoLeft { width: 33%; text-align: left; }
+  .infoCenter { width: 33%; text-align: center; }
+  .infoRight { width: 33%; text-align: right; }
+
+  /* Hover & Active States for list rows */
+  .activeBlock .projectInfo {
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .activeBlock .client,
+  .activeBlock .title,
+  .activeBlock .category {
+    opacity: 1;
+    font-weight: 600; /* Bold for active item */
+  }
+
+  .projectInfo:hover {
+    background: rgba(0, 0, 0, 0.4);
+    cursor: pointer;
   }
 }
