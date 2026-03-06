@@ -92,7 +92,7 @@ export default function HomePage() {
               <video
                 className={styles.heroVideo}
                 autoPlay
-                muted
+                muted={isMuted}
                 loop
                 playsInline
                 src={projects[0].video_url}

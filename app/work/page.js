@@ -12,6 +12,7 @@ export default function WorkPage() {
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState('All');
   const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
+  const [isMuted, setIsMuted] = useState(true);
 
   useEffect(() => {
     async function fetchProjects() {
@@ -96,7 +97,7 @@ export default function WorkPage() {
                         src={project.video_url}
                         className={styles.thumbnail}
                         autoPlay
-                        muted
+                        muted={isMuted}
                         loop
                         playsInline
                       />
@@ -131,7 +132,7 @@ export default function WorkPage() {
                       <video
                         src={project.video_url}
                         className={styles.listThumbMedia}
-                        muted
+                        muted={isMuted}
                         loop
                         playsInline
                         onMouseOver={(e) => e.target.play()}
@@ -170,6 +171,24 @@ export default function WorkPage() {
           </div>
         )}
       </div>
+
+      {/* Audio Toggle */}
+      <button 
+        className={styles.soundToggle} 
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setIsMuted(!isMuted);
+        }}
+        aria-label={isMuted ? "Unmute" : "Mute"}
+      >
+        {isMuted ? (
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 5L6 9H2v6h4l5 4V5zM23 9l-6 6M17 9l6 6"/></svg>
+        ) : (
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M11 5L6 9H2v6h4l5 4V5zM19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+        )}
+        <span>{isMuted ? "Sound Off" : "Sound On"}</span>
+      </button>
     </div>
   );
 }
