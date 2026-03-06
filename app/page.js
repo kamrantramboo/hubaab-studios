@@ -11,7 +11,8 @@ export default function HomePage() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isUnmuted, setIsUnmuted] = useState(false);
   const [videoProgress, setVideoProgress] = useState(0);
-  const videoRefs = useRef([]);
+  const desktopVideoRefs = useRef([]);
+  const mobileVideoRefs = useRef([]);
 
   useEffect(() => {
     async function fetchFeatured() {
@@ -35,11 +36,10 @@ export default function HomePage() {
   }, []);
 
   // Intersection observer for mobile scrolling autoplay
-  // Desktop relies on hover events instead
   useEffect(() => {
     if (window.innerWidth >= 768) return; 
 
-    const videos = videoRefs.current.filter(Boolean);
+    const videos = mobileVideoRefs.current.filter(Boolean);
     if (!videos.length) return;
 
     const observer = new IntersectionObserver(
@@ -84,16 +84,16 @@ export default function HomePage() {
       }
       setActiveIndex(idx);
       
-      // Play the newly active video instantly
-      if (videoRefs.current[idx]) {
-        videoRefs.current[idx].play().catch(() => {});
+      // Play the newly active desktop video instantly
+      if (desktopVideoRefs.current[idx]) {
+        desktopVideoRefs.current[idx].play().catch(() => {});
       }
       
-      // Pause others to save resources
-      videoRefs.current.forEach((vid, i) => {
+      // Pause others
+      desktopVideoRefs.current.forEach((vid, i) => {
         if (i !== idx && vid) {
           vid.pause();
-          vid.currentTime = 0; // Optional: restart logic
+          vid.currentTime = 0;
         }
       });
     }
@@ -120,11 +120,38 @@ export default function HomePage() {
 
   return (
     <section className={styles.homeContainer}>
-      {/* Desktop Sound Toggle */}
       <button className={styles.desktopSoundToggle} onClick={toggleGlobalMute}>
         {isUnmuted ? "MUTE" : "UNMUTE"}
       </button>
 
+      {/* DESKTOP BACKGROUND LAYER: Purely visuals, isolated Z-index */}
+      <div className={styles.desktopBgLayer}>
+        {projects.map((project, i) => {
+          const isActive = activeIndex === i;
+          return (
+            <div key={`bg-${project.id}`} className={`${styles.desktopBgWrapper} ${isActive ? styles.activeBg : ''}`}>
+              {project.video_url ? (
+                <video
+                  ref={(el) => (desktopVideoRefs.current[i] = el)}
+                  muted={!isUnmuted || !isActive}
+                  loop
+                  playsInline
+                  autoPlay={i === 0} 
+                  preload="metadata"
+                  src={project.video_url}
+                  className={styles.bgVideoField}
+                  style={{ objectPosition: project.video_alignment || 'center center' }}
+                  onTimeUpdate={isActive ? handleTimeUpdate : undefined}
+                />
+              ) : project.thumbnail_url ? (
+                <img src={project.thumbnail_url} alt={project.title} className={styles.bgVideoField} />
+              ) : null}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* SCROLLABLE LIST LAYER: Interactive text on Desktop, full feed on Mobile */}
       <div className={styles.listWrapper}>
         {projects.map((project, i) => {
           const isActive = activeIndex === i;
@@ -135,10 +162,11 @@ export default function HomePage() {
               className={`${styles.projectBlock} ${isActive ? styles.activeBlock : ''}`}
               onMouseEnter={() => handleMouseEnter(i)}
             >
-              <div className={styles.videoWrapper}>
+              {/* MOBILE VIDEO WRAPPER: Hidden cleanly on desktop */}
+              <div className={styles.mobileVideoWrapper}>
                 {project.video_url ? (
                   <video
-                    ref={(el) => (videoRefs.current[i] = el)}
+                    ref={(el) => (mobileVideoRefs.current[i] = el)}
                     data-index={i}
                     muted={!isUnmuted || !isActive}
                     loop
@@ -148,35 +176,20 @@ export default function HomePage() {
                     src={project.video_url}
                     className={styles.videoField}
                     style={{ objectPosition: project.video_alignment || 'center center' }}
-                    onTimeUpdate={isActive ? handleTimeUpdate : undefined}
                   />
-              ) : project.thumbnail_url ? (
-                <img
-                  src={project.thumbnail_url}
-                  alt={project.title}
-                  className={styles.videoField}
-                  loading="lazy"
-                />
-              ) : (
-                <div className={styles.placeholderBg} />
-              )}
+                ) : project.thumbnail_url ? (
+                  <img src={project.thumbnail_url} alt={project.title} className={styles.videoField} />
+                ) : <div className={styles.placeholderBg} />}
+                
+                <button className={styles.mobileSoundToggle} onClick={toggleGlobalMute}>
+                  {isUnmuted ? "MUTE" : "UNMUTE"}
+                </button>
+              </div>
               
-              {/* Mobile Sound Toggle inside the wrapper so it overlays the video */}
-              <button 
-                className={styles.mobileSoundToggle} 
-                onClick={toggleGlobalMute}
-              >
-                {isUnmuted ? "MUTE" : "UNMUTE"}
-              </button>
-              
-              {/* Project Info Overlay */}
               <Link href={`/work/${project.slug}`} className={styles.projectInfo}>
                 {isActive && (
                   <div className={styles.progressBar}>
-                    <div 
-                      className={styles.progressFill} 
-                      style={{ transform: `scaleX(${videoProgress / 100})` }}
-                    />
+                    <div className={styles.progressFill} style={{ transform: `scaleX(${videoProgress / 100})` }} />
                   </div>
                 )}
                 <div className={styles.infoContent}>
@@ -187,9 +200,8 @@ export default function HomePage() {
                 </div>
               </Link>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
       </div>
     </section>
   );

@@ -43,12 +43,19 @@
   opacity: 0.5;
 }
 
+/* -------------------------------------------
+   Dual-Rendering Architecture Base
+   ------------------------------------------- */
+.desktopBgLayer {
+  display: none; /* Hidden on mobile */
+}
+
 /* Base Mobile Layout (Reactive List) */
 .homeContainer {
   width: 100%;
   background: #000;
   min-height: 100vh;
-  padding-top: var(--nav-height); /* Clear global nav */
+  padding-top: var(--nav-height); 
   padding-bottom: 0px; 
   display: flex;
   flex-direction: column;
@@ -75,10 +82,10 @@
   position: relative;
 }
 
-.videoWrapper {
+.mobileVideoWrapper {
   width: 100%;
   position: relative;
-  aspect-ratio: 4 / 5; /* Slightly taller aspect ratio for mobile feed, like Reels */
+  aspect-ratio: 4 / 5; 
   background: #111;
   overflow: hidden;
 }
@@ -98,7 +105,7 @@
 
 .mobileSoundToggle {
   position: absolute;
-  top: 16px; /* Moved to top so it doesn't clash with title overlay */
+  top: 16px; 
   right: 16px;
   padding: 6px 12px;
   background: transparent;
@@ -126,7 +133,7 @@
   left: 0;
   right: 0;
   padding: 40px var(--container-padding) 24px var(--container-padding);
-  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+  background: transparent; /* Gradient removed as requested */
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -136,7 +143,7 @@
 }
 
 .progressBar {
-  display: none; /* Hide progress bar on mobile reactive feed */
+  display: none; 
 }
 
 .infoContent {
@@ -151,7 +158,7 @@
   gap: 8px;
   font-size: 1.25rem;
   font-weight: 500;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8); /* Keep text shadow for readability since gradient is gone */
 }
 
 .client {
@@ -172,7 +179,7 @@
   opacity: 0.6;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
 }
 
 
@@ -181,29 +188,31 @@
    ------------------------------------------- */
 @media (min-width: 768px) {
   .homeContainer {
+    width: 100vw;
     height: 100vh;
     padding: 0;
-    overflow: hidden; /* Prevent page scroll */
-    justify-content: flex-end; 
-    gap: 0;
+    margin: 0;
+    overflow: hidden; /* Prevent native window scroll */
+    position: relative;
+    background: #000;
   }
 
   .desktopSoundToggle {
     display: block;
-    position: absolute;
-    top: calc(var(--nav-height) + 16px);
-    right: var(--container-padding);
+    position: fixed; /* Fixed to viewport so it never scrolls */
+    top: calc(var(--nav-height) + 24px);
+    right: 32px;
     padding: 8px 16px;
-    background: transparent;
+    background: transparent; /* Ensure no gradient/shape on desktop either */
     color: rgba(255, 255, 255, 0.5);
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     border: none;
     cursor: pointer;
-    z-index: 50;
-    transition: color var(--transition-fast), transform var(--transition-fast);
+    z-index: 100; /* Highest priority */
+    transition: all var(--transition-fast);
   }
   
   .desktopSoundToggle:hover {
@@ -215,66 +224,93 @@
     display: none;
   }
 
-  /* Scrollable 1/4th List area */
-  .listWrapper {
-    position: absolute;
-    bottom: var(--container-padding);
-    left: var(--container-padding);
-    width: 25vw;
-    max-width: 400px;
-    min-width: 280px;
-    height: auto;
-    max-height: 50vh; /* Constrained height */
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto; /* Enable scrolling */
-    z-index: 50; /* Super high z-index to guarantee it sits above the video */
-    
-    /* Hide scrollbar */
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-  
-  .listWrapper::-webkit-scrollbar {
-    display: none;
-  }
-
-  .projectBlock {
-    width: 100%;
-    position: relative; /* Changed from static to establish stacking context */
-    z-index: 51;
-  }
-
-  /* The actual background video */
-  .videoWrapper {
+  /* Dual Render: Show Desktop Background layer */
+  .desktopBgLayer {
+    display: block;
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    aspect-ratio: auto; /* Override mobile */
-    background: transparent;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .desktopBgWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     opacity: 0;
-    z-index: 10; /* Lower than the listWrapper */
     transition: opacity 0.6s ease;
-    pointer-events: none; /* Ignore clicks on the video itself */
   }
 
-  .activeBlock .videoWrapper {
+  .desktopBgWrapper.activeBg {
     opacity: 1;
-    z-index: 11; 
+    z-index: 1;
   }
 
-  /* Restyle ProjectInfo to be a static minimal list row on Desktop */
+  .bgVideoField {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Dual Render: Hide Mobile Video layer */
+  .mobileVideoWrapper {
+    display: none;
+  }
+
+  /* Scrollable CSS-Grid or Flex List Overlay (Z-Index 10) */
+  .listWrapper {
+    position: fixed; /* Fixed relative to viewport */
+    bottom: 32px;
+    left: 32px;
+    width: 25vw;
+    max-width: 400px;
+    min-width: 300px;
+    max-height: calc(100vh - var(--nav-height) - 100px); 
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; 
+    z-index: 10;
+    pointer-events: auto;
+    
+    /* Scrollbar styling for desktop so user KNOWS it scrolls */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.2) transparent;
+  }
+  
+  .listWrapper::-webkit-scrollbar {
+    width: 4px;
+  }
+  .listWrapper::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .listWrapper::-webkit-scrollbar-thumb {
+    background-color: rgba(255,255,255,0.2);
+    border-radius: 20px;
+  }
+
+  .projectBlock {
+    /* We don't need projectBlock to hold shape on desktop anymore */
+    display: contents; 
+  }
+
+  /* Project Info Minimal Rows */
   .projectInfo {
     position: relative; /* Break out of absolute mobile styling */
-    bottom: auto; left: auto; right: auto;
     width: 100%;
-    padding: 12px 16px; /* Ultra minimal padding */
-    background: transparent; /* Remove mobile gradient */
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 14px 16px; 
+    background: rgba(0,0,0,0.2); /* Slight glassmorphism base */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
     transition: all var(--transition-fast);
-    z-index: 55; /* Force above everything */
+    z-index: 15; 
   }
 
   .progressBar {
