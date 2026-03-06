@@ -12,7 +12,6 @@ export default function WorkPage() {
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState('All');
   const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
-  const [unmutedId, setUnmutedId] = useState(null);
 
   useEffect(() => {
     async function fetchProjects() {
@@ -34,11 +33,7 @@ export default function WorkPage() {
     fetchProjects();
   }, []);
 
-  const toggleMute = (e, id) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setUnmutedId(unmutedId === id ? null : id);
-  };
+
 
   const filtered = activeFilter === 'All'
     ? projects
@@ -103,7 +98,7 @@ export default function WorkPage() {
                         <video
                           src={project.video_url}
                           className={styles.thumbnail}
-                          muted={unmutedId !== project.id}
+                          muted
                           loop
                           playsInline
                           onMouseEnter={(e) => e.target.play()}
@@ -112,12 +107,6 @@ export default function WorkPage() {
                             e.target.currentTime = 0;
                           }}
                         />
-                        <button 
-                          className={styles.miniSoundToggle}
-                          onClick={(e) => toggleMute(e, project.id)}
-                        >
-                          {unmutedId === project.id ? "MUTE" : "UNMUTE"}
-                        </button>
                       </>
                     ) : project.thumbnail_url ? (
                       <img
@@ -151,7 +140,7 @@ export default function WorkPage() {
                         <video
                           src={project.video_url}
                           className={styles.listThumbMedia}
-                          muted={unmutedId !== project.id}
+                          muted
                           loop
                           playsInline
                           onMouseOver={(e) => e.target.play()}
@@ -160,12 +149,6 @@ export default function WorkPage() {
                             e.target.currentTime = 0;
                           }}
                         />
-                        <button 
-                          className={styles.miniSoundToggle}
-                          onClick={(e) => toggleMute(e, project.id)}
-                        >
-                          {unmutedId === project.id ? "MUTE" : "UNMUTE"}
-                        </button>
                       </>
                     ) : project.thumbnail_url ? (
                       <img
