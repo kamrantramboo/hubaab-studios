@@ -149,29 +149,21 @@ export default function HomePage() {
                 >
                   {unmutedVideoIndex === i ? "MUTE" : "UNMUTE"}
                 </button>
-                <div className={styles.mobileProjectInfo}>
-                  <div className={styles.infoContent}>
-                    <span className={styles.titleInfo}>
-                      {project.title} <span className={styles.separator}>—</span> <span className={styles.client}>{project.client}</span>
-                    </span>
-                    <span className={styles.category}>{project.category}</span>
-                  </div>
-                </div>
               </div>
             </div>
           );
         })}
       </div>
 
-      {/* FIXED DESKTOP SIDEBAR TEXT LIST */}
-      <div className={styles.desktopSidebar}>
+      {/* FIXED UNIFIED LIST OVERLAY (Mobile & Desktop) */}
+      <div className={styles.projectListOverlay}>
         {projects.map((project, i) => {
           const isActive = activeIndex === i;
           return (
             <Link 
               key={`link-${project.id}`} 
               href={`/work/${project.slug}`}
-              className={`${styles.sidebarItem} ${isActive ? styles.activeSidebarItem : ''}`}
+              className={`${styles.listItem} ${isActive ? styles.activeListItem : ''}`}
               ref={(el) => (projectItemRefs.current[i] = el)}
             >
               {isActive && (
@@ -179,11 +171,11 @@ export default function HomePage() {
                   <div className={styles.progressFill} style={{ transform: `scaleX(${videoProgress / 100})` }} />
                 </div>
               )}
-              <div className={styles.sidebarContent}>
-                <span className={styles.sidebarTitle}>
-                  {project.title} <span className={styles.separator}>—</span> <span className={styles.sidebarClient}>{project.client}</span>
+              <div className={styles.listContent}>
+                <span className={styles.listTitle}>
+                  {project.title} <span className={styles.separator}>—</span> <span className={styles.listClient}>{project.client}</span>
                 </span>
-                <span className={styles.sidebarCategory}>{project.category}</span>
+                <span className={styles.listCategory}>{project.category}</span>
               </div>
             </Link>
           );
