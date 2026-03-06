@@ -130,6 +130,24 @@
   letter-spacing: 0.15em;
 }
 
+/* Vertical / Portrait Video Tweaks */
+.videoItem.isVertical .video {
+  object-fit: contain;
+  background: #000;
+}
+
+.videoItem.isVertical::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  filter: blur(40px) brightness(0.4);
+  z-index: -1;
+}
+
 /* Video Overlay Info */
 .videoOverlayInfo {
   position: absolute;

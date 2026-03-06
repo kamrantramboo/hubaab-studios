@@ -99,7 +99,7 @@ export default function HomePage() {
                 <Link
                   href={`/work/${project.slug}`}
                   key={project.id}
-                  className={styles.videoItem}
+                  className={`${styles.videoItem} ${project.is_vertical ? styles.isVertical : ''}`}
                   data-item={project.title}
                 >
                   <div className={styles.videoEmbed}>

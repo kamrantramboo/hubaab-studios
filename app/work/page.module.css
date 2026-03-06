@@ -126,6 +126,10 @@
   color: var(--text-secondary);
 }
 
+.projectCard.isVertical .thumbnailWrapper {
+  aspect-ratio: 3 / 4;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .grid {

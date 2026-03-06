@@ -77,7 +77,7 @@ export default function WorkPage() {
               <Link
                 key={project.id}
                 href={`/work/${project.slug}`}
-                className={styles.projectCard}
+                className={`${styles.projectCard} ${project.is_vertical ? styles.isVertical : ''}`}
               >
                 <div className={styles.thumbnailWrapper}>
                   {project.video_url ? (
