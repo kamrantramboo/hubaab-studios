@@ -83,25 +83,36 @@
   color: var(--text-primary);
 }
 
-.clientLogoWrapper {
+.clientItemWithLogo {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  gap: 8px;
   padding: 8px 0;
   border-bottom: 1px solid var(--border);
   min-height: 40px;
+  transition: color var(--transition-fast), opacity var(--transition-fast);
 }
 
-.clientLogo {
-  max-width: 120px;
-  max-height: 30px;
+.clientSmallLogo {
+  height: 14px; /* small like the text */
+  max-width: 40px;
   object-fit: contain;
-  filter: grayscale(100%) brightness(200%); /* Make logos white and blend cleanly */
-  opacity: 0.6;
+  filter: grayscale(100%) brightness(200%);
+  opacity: 0.8;
   transition: opacity var(--transition-fast);
 }
 
-.clientLogoWrapper:hover .clientLogo {
+.clientNameNoBorder {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.5);
+  transition: color var(--transition-fast);
+}
+
+.clientItemWithLogo:hover .clientNameNoBorder {
+  color: var(--text-primary);
+}
+
+.clientItemWithLogo:hover .clientSmallLogo {
   opacity: 1;
 }
 

@@ -18,7 +18,33 @@ const studioInfoSchema = {
       name: 'clients',
       title: 'Featured Clients',
       type: 'array',
-      of: [{ type: 'string' }]
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'name',
+              title: 'Client Name',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'logo',
+              title: 'Client Logo',
+              type: 'image',
+              options: {
+                hotspot: true,
+              },
+            },
+          ],
+          preview: {
+            select: {
+              title: 'name',
+              media: 'logo',
+            },
+          },
+        },
+      ],
     },
     {
       name: 'industry',

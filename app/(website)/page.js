@@ -18,7 +18,7 @@ export default function HomePage() {
   useEffect(() => {
     async function fetchFeatured() {
       try {
-        const query = `*[_type == "project" && featured == true] | order(sortOrder asc) {
+        const query = `*[_type == "project" && featured == true && !(_id in path("drafts.**"))] | order(sortOrder asc) {
           _id,
           title,
           client,

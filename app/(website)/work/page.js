@@ -16,7 +16,7 @@ export default function WorkPage() {
   useEffect(() => {
     async function fetchProjects() {
       try {
-        const query = `*[_type == "project"] | order(sortOrder asc) {
+        const query = `*[_type == "project" && !(_id in path("drafts.**"))] | order(sortOrder asc) {
           _id,
           title,
           client,

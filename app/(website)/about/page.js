@@ -11,7 +11,13 @@ export default function AboutPage() {
   useEffect(() => {
     async function fetchInfo() {
       try {
-        const query = `*[_type == "studioInfo"][0]`;
+        const query = `*[_type == "studioInfo"][0]{
+          ...,
+          clients[]{
+            name,
+            "logoUrl": logo.asset->url
+          }
+        }`;
         const data = await sanityFetch({ query });
         
         if (data) {
@@ -75,16 +81,15 @@ export default function AboutPage() {
               <h2 className={styles.sectionTitle}>Clients</h2>
               <div className={styles.clientsGrid}>
                 {clients.length > 0 ? clients.map((client, i) => {
-                  if (client.includes('|')) {
-                    const [name, logoUrl] = client.split('|').map(s => s.trim());
+                  if (client.logoUrl) {
                     return (
-                      <div key={i} className={styles.clientLogoWrapper} title={name}>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={logoUrl} alt={name} className={styles.clientLogo} />
+                      <div key={i} className={styles.clientItemWithLogo} title={client.name}>
+                        <span className={styles.clientNameNoBorder}>{client.name}</span>
+                        <img src={client.logoUrl} alt={client.name} className={styles.clientSmallLogo} />
                       </div>
                     );
                   }
-                  return <span key={i} className={styles.clientName}>{client}</span>;
+                  return <span key={i} className={styles.clientName}>{client.name}</span>;
                 }) : (
                   <span className={styles.clientName} style={{ color: 'var(--text-dim)' }}>Client list coming soon</span>
                 )}

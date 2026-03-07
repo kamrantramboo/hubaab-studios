@@ -15,7 +15,7 @@ export default function ProjectDetailPage() {
   useEffect(() => {
     async function fetchProject() {
       try {
-        const query = `*[_type == "project" && slug.current == $slug][0] {
+        const query = `*[_type == "project" && slug.current == $slug && !(_id in path("drafts.**"))][0] {
           _id,
           title,
           client,
