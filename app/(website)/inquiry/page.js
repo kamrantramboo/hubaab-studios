@@ -84,13 +84,18 @@ export default function InquiryPage() {
     setSubmitting(true);
 
     try {
-      const doc = {
-        _type: 'inquiry',
-        ...form,
-        createdAt: new Date().toISOString(),
-      };
+      const response = await fetch('/api/inquiry', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form),
+      });
 
-      await sanityClient.create(doc);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
       setSubmitted(true);
     } catch (err) {
       console.error('Submission error:', err);

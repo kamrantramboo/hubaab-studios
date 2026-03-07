@@ -1,0 +1,45 @@
+[0m[0m
+[0m[4mC:\Users\dell\New design Ideas\hubaab-studios\app\(website)\apply\page.js[24m[0m
+[0m  [2m60:60[22m   [31merror[39m  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  [2mreact/no-unescaped-entities[22m[0m
+[0m  [2m60:119[22m  [31merror[39m  `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`  [2mreact/no-unescaped-entities[22m[0m
+[0m[0m
+[0m[4mC:\Users\dell\New design Ideas\hubaab-studios\app\(website)\page.js[24m[0m
+[0m  [2m149:19[22m  [33mwarning[39m  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  [2m@next/next/no-img-element[22m[0m
+[0m[0m
+[0m[4mC:\Users\dell\New design Ideas\hubaab-studios\app\(website)\work\[slug]\page.js[24m[0m
+[0m   [2m59:59[22m  [31merror[39m    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          [2mreact/no-unescaped-entities[22m[0m
+[0m   [2m93:13[22m  [33mwarning[39m  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  [2m@next/next/no-img-element[22m[0m
+[0m  [2m137:17[22m  [33mwarning[39m  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  [2m@next/next/no-img-element[22m[0m
+[0m[0m
+[0m[4mC:\Users\dell\New design Ideas\hubaab-studios\app\(website)\work\page.js[24m[0m
+[0m  [2m128:23[22m  [33mwarning[39m  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  [2m@next/next/no-img-element[22m[0m
+[0m  [2m140:51[22m  [31merror[39m    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          [2mreact/no-unescaped-entities[22m[0m
+[0m  [2m140:67[22m  [31merror[39m    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          [2mreact/no-unescaped-entities[22m[0m
+[0m  [2m179:23[22m  [33mwarning[39m  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  [2m@next/next/no-img-element[22m[0m
+[0m  [2m192:21[22m  [31merror[39m    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          [2mreact/no-unescaped-entities[22m[0m
+[0m  [2m192:37[22m  [31merror[39m    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`                                                                                                                                                                                                                          [2mreact/no-unescaped-entities[22m[0m
+[0m[0m
+[0m[4mC:\Users\dell\New design Ideas\hubaab-studios\components\Loader.js[24m[0m
+[0m  [2m44:9[22m  [33mwarning[39m  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  [2m@next/next/no-img-element[22m[0m
+[0m  [2m49:9[22m  [33mwarning[39m  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  [2m@next/next/no-img-element[22m[0m
+[0m[0m
+[0m[4mC:\Users\dell\New design Ideas\hubaab-studios\sanity\schema\application.js[24m[0m
+[0m  [2m1:1[22m  [33mwarning[39m  Assign object to a variable before exporting as module default  [2mimport/no-anonymous-default-export[22m[0m
+[0m[0m
+[0m[4mC:\Users\dell\New design Ideas\hubaab-studios\sanity\schema\career.js[24m[0m
+[0m  [2m1:1[22m  [33mwarning[39m  Assign object to a variable before exporting as module default  [2mimport/no-anonymous-default-export[22m[0m
+[0m[0m
+[0m[4mC:\Users\dell\New design Ideas\hubaab-studios\sanity\schema\inquiry.js[24m[0m
+[0m  [2m1:1[22m  [33mwarning[39m  Assign object to a variable before exporting as module default  [2mimport/no-anonymous-default-export[22m[0m
+[0m[0m
+[0m[4mC:\Users\dell\New design Ideas\hubaab-studios\sanity\schema\news.js[24m[0m
+[0m  [2m1:1[22m  [33mwarning[39m  Assign object to a variable before exporting as module default  [2mimport/no-anonymous-default-export[22m[0m
+[0m[0m
+[0m[4mC:\Users\dell\New design Ideas\hubaab-studios\sanity\schema\project.js[24m[0m
+[0m  [2m1:1[22m  [33mwarning[39m  Assign object to a variable before exporting as module default  [2mimport/no-anonymous-default-export[22m[0m
+[0m[0m
+[0m[4mC:\Users\dell\New design Ideas\hubaab-studios\sanity\schema\studioInfo.js[24m[0m
+[0m  [2m1:1[22m  [33mwarning[39m  Assign object to a variable before exporting as module default  [2mimport/no-anonymous-default-export[22m[0m
+[0m[0m
+[0m[31m[1m✖ 20 problems (7 errors, 13 warnings)[22m[39m[0m
+[0m[31m[1m[22m[39m[0m

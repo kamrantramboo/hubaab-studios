@@ -26,13 +26,18 @@ function ApplyForm() {
     setSubmitting(true);
 
     try {
-      const doc = {
-        _type: 'application',
-        ...form,
-        createdAt: new Date().toISOString(),
-      };
+      const response = await fetch('/api/apply', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(form),
+      });
 
-      await sanityClient.create(doc);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
       setSubmitted(true);
       
       // Redirect back to careers after 3 seconds
@@ -52,7 +57,7 @@ function ApplyForm() {
       <div className="empty-state animate-fade-in">
         <div className={styles.successIcon}>✓</div>
         <h3>Application Sent</h3>
-        <p>Thank you for your interest in hubaab studio. We've received your application and will be in touch if there's a fit.</p>
+        <p>Thank you for your interest in hubaab studio. We&apos;ve received your application and will be in touch if there&apos;s a fit.</p>
         <p style={{ marginTop: '20px', fontSize: '0.65rem' }}>Redirecting you back to careers...</p>
       </div>
     );

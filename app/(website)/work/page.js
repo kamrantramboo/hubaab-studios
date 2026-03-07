@@ -125,6 +125,7 @@ export default function WorkPage() {
                         />
                       </>
                     ) : project.thumbnail_url ? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
                       <img
                         src={project.thumbnail_url}
                         alt={project.title}
@@ -137,7 +138,7 @@ export default function WorkPage() {
                   </div>
                   <div className={styles.info}>
                     <div className={styles.client}>{project.client}</div>
-                    <div className={styles.title}>"{project.title}"</div>
+                    <div className={styles.title}>&quot;{project.title}&quot;</div>
                   </div>
                 </Link>
               ))}
@@ -176,6 +177,7 @@ export default function WorkPage() {
                         />
                       </>
                     ) : project.thumbnail_url ? (
+                      /* eslint-disable-next-line @next/next/no-img-element */
                       <img
                         src={project.thumbnail_url}
                         alt={project.title}
@@ -189,7 +191,7 @@ export default function WorkPage() {
                     {project.client}
                   </div>
                   <div className={`${styles.listCol} ${styles.listTitle}`}>
-                    "{project.title}"
+                    &quot;{project.title}&quot;
                   </div>
                   <div className={`${styles.listCol} ${styles.listCategory}`}>
                     {project.category}

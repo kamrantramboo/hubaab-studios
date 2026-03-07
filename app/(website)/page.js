@@ -146,6 +146,7 @@ export default function HomePage() {
                     onTimeUpdate={isActive ? handleTimeUpdate : undefined}
                   />
                 ) : project.thumbnail_url ? (
+                  /* eslint-disable-next-line @next/next/no-img-element */
                   <img src={project.thumbnail_url} alt={project.title} className={styles.videoField} />
                 ) : <div className={styles.placeholderBg} />}
                 

@@ -1,4 +1,4 @@
-export default {
+const studioInfoSchema = {
   name: 'studioInfo',
   title: 'Studio Info',
   type: 'document',
@@ -43,3 +43,5 @@ export default {
     }
   ],
 }
+
+export default studioInfoSchema;

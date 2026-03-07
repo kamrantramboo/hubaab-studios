@@ -41,11 +41,13 @@ export default function Loader() {
   return (
     <div className={`${styles.loaderContainer} ${splitting ? styles.containerFadeOut : ''}`}>
       <div className={styles.logoWrapper}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img 
           src="/loader-logo.png" 
           alt="hubaab studio left"
           className={`${styles.logoImage} ${styles.leftImage} ${shrinking ? styles.shrink : ''} ${splitting ? styles.splitLeft : ''}`} 
         />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img 
           src="/loader-logo.png" 
           alt="hubaab studio right"

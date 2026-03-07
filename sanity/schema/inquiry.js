@@ -1,4 +1,4 @@
-export default {
+const inquirySchema = {
   name: 'inquiry',
   title: 'Inquiry',
   type: 'document',
@@ -70,3 +70,5 @@ export default {
   ],
   readOnly: true // Inquiries should mostly be read in the dashboard
 }
+
+export default inquirySchema;

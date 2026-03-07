@@ -1,4 +1,4 @@
-export default {
+const projectSchema = {
   name: 'project',
   title: 'Project',
   type: 'document',
@@ -96,3 +96,5 @@ export default {
     }
   ],
 }
+
+export default projectSchema;

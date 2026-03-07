@@ -1,4 +1,4 @@
-export default {
+const applicationSchema = {
   name: 'application',
   title: 'Job Applications',
   type: 'document',
@@ -59,3 +59,5 @@ export default {
     }
   ]
 }
+
+export default applicationSchema;

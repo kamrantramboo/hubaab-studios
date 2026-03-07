@@ -56,7 +56,7 @@ export default function ProjectDetailPage() {
         <div className="container">
           <div className="empty-state">
             <h3>Project not found</h3>
-            <p>This project may have been removed or doesn't exist.</p>
+            <p>This project may have been removed or doesn&apos;t exist.</p>
             <Link href="/work" className="btn btn-outline" style={{ marginTop: 24 }}>
               ← Back to Work
             </Link>
@@ -90,6 +90,7 @@ export default function ProjectDetailPage() {
               </button>
             </div>
           ) : project.thumbnail_url ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
             <img
               src={project.thumbnail_url}
               alt={project.title}
@@ -134,6 +135,7 @@ export default function ProjectDetailPage() {
           <div className={styles.gallery}>
             {project.media_urls.map((url, i) => (
               <div key={i} className={styles.galleryItem}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={url} alt={`${project.title} - ${i + 1}`} loading="lazy" />
               </div>
             ))}
