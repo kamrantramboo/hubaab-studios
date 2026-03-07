@@ -120,8 +120,16 @@
   gap: 24px;
 }
 
+.newsletterHeading {
+  font-size: 2rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
 .newsletterText {
-  font-size: 0.88rem;
+  font-size: 0.65rem;
   color: var(--text-muted);
   max-width: 500px;
   line-height: 1.6;

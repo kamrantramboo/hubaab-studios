@@ -34,6 +34,10 @@ export default function Footer() {
 
   const isLightTheme = pathname?.startsWith('/work');
 
+  if (pathname === '/') {
+    return null;
+  }
+
   return (
     <footer className={`${styles.footer} ${isLightTheme ? 'light-theme' : ''}`}>
       <div className={styles.inner}>
@@ -90,7 +94,7 @@ export default function Footer() {
         </div>
 
         <div className={styles.newsletter}>
-          <h4 className={styles.colTitle}>Keep in Touch</h4>
+          <h2 className={styles.newsletterHeading}>Keep in Touch</h2>
           <p className={styles.newsletterText}>
             Sign up to receive occasional updates from hubaab studio, including recent projects, studio work, and behind-the-scenes content.
           </p>
